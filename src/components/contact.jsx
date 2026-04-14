@@ -34,7 +34,7 @@ const ContactForm = ({ ejsReady }) => {
   const set = (k) => (e) => setFields((f) => ({ ...f, [k]: e.target.value }));
 
   const inputStyle = { fontFamily: "'DM Sans',sans-serif", fontSize: "14px", color: "var(--text-primary)", background: "var(--bg-input)", border: "1.5px solid var(--border)", borderRadius: "12px", padding: "11px 16px", outline: "none", width: "100%", transition: "border-color 0.2s,box-shadow 0.2s" };
-  const fi = (e) => { e.target.style.borderColor = GREEN; e.target.style.boxShadow = "0 0 0 3px rgba(62,207,142,0.12)"; };
+  const fi = (e) => { e.target.style.borderColor = GREEN; e.target.style.boxShadow = "0 0 0 3px rgba(167,139,250,0.12)"; };
   const fo = (e) => { e.target.style.borderColor = "var(--border)"; e.target.style.boxShadow = "none"; };
 
   const handleSubmit = async (e) => {
@@ -47,13 +47,13 @@ const ContactForm = ({ ejsReady }) => {
 
   if (status === "success") return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "48px 32px", gap: "20px" }}>
-      <div style={{ width: "72px", height: "72px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(62,207,142,0.30)" }}>
+      <div style={{ width: "72px", height: "72px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(167,139,250,0.30)" }}>
         <CheckIcon size={28}/>
       </div>
       <h3 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "24px", color: "var(--text-primary)", letterSpacing: "-0.02em" }}>{c.successTitle}</h3>
       <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "15px", color: "var(--text-secondary)", lineHeight: 1.6, maxWidth: "320px" }}>{c.successDesc}</p>
       <button onClick={() => { setStatus("idle"); setFields({ from_name: "", from_email: "", company: "", service: "", message: "", extra_info: "" }); }}
-        style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: GREEN_DARK, background: "transparent", border: "1.5px solid rgba(62,207,142,0.35)", borderRadius: "10px", padding: "9px 20px", cursor: "pointer" }}
+        style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: GREEN_DARK, background: "transparent", border: "1.5px solid rgba(167,139,250,0.35)", borderRadius: "10px", padding: "9px 20px", cursor: "pointer" }}
       >{c.successBtn}</button>
     </div>
   );
@@ -92,9 +92,9 @@ const ContactForm = ({ ejsReady }) => {
         </div>
       )}
 
-      <button type="submit" disabled={status === "sending"} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px", color: "#fff", background: status === "sending" ? "linear-gradient(135deg,#7dd8ab,#5bb89a)" : GRAD, border: "none", borderRadius: "13px", padding: "14px 28px", cursor: status === "sending" ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", boxShadow: "0 4px 20px rgba(62,207,142,0.28)", transition: "transform 0.2s,box-shadow 0.2s" }}
-        onMouseEnter={(e) => { if (status !== "sending") { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(62,207,142,0.38)"; } }}
-        onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(62,207,142,0.28)"; }}
+      <button type="submit" disabled={status === "sending"} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px", color: "#fff", background: status === "sending" ? "linear-gradient(135deg,#7dd8ab,#5bb89a)" : GRAD, border: "none", borderRadius: "13px", padding: "14px 28px", cursor: status === "sending" ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", boxShadow: "0 4px 20px rgba(167,139,250,0.28)", transition: "transform 0.2s,box-shadow 0.2s" }}
+        onMouseEnter={(e) => { if (status !== "sending") { e.currentTarget.style.transform = "scale(1.02)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.38)"; } }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.28)"; }}
       >
         {status === "sending" ? <><svg width="15" height="15" viewBox="0 0 16 16" fill="none" style={{ animation: "arp-spin 0.9s linear infinite" }}><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.4)" strokeWidth="2"/><path d="M8 2a6 6 0 016 6" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg>{c.sending}</> : <>{c.submit}<ArrowIcon white/></>}
       </button>
@@ -110,7 +110,7 @@ export default function Contact() {
 
   return (
     <section style={{ background: "var(--bg-secondary)", padding: "96px 0 112px", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: "-80px", right: "-100px", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(62,207,142,0.06) 0%,transparent 65%)", pointerEvents: "none" }}/>
+      <div style={{ position: "absolute", top: "-80px", right: "-100px", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.06) 0%,transparent 65%)", pointerEvents: "none" }}/>
       <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "0 24px", position: "relative" }}>
         <SectionBadge>{c.badge}</SectionBadge>
         <SectionTitle accent={c.titleAccent}>{c.title}</SectionTitle>
@@ -122,7 +122,7 @@ export default function Contact() {
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              <div style={{ width: "38px", height: "38px", borderRadius: "11px", background: "rgba(62,207,142,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>
+              <div style={{ width: "38px", height: "38px", borderRadius: "11px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 5h14v10H3V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 5l7 6 7-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
               <div>
@@ -158,14 +158,14 @@ export default function Contact() {
                       onMouseEnter={(e) => e.currentTarget.querySelector("span").style.color = GREEN_DARK}
                       onMouseLeave={(e) => e.currentTarget.querySelector("span").style.color = "var(--text-secondary)"}
                     >
-                      <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(62,207,142,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>{row.icon}</div>
+                      <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>{row.icon}</div>
                       <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-secondary)", transition: "color 0.15s" }}>{row.text}</span>
                     </a>
                   ))}
                 </div>
-                <a href={f.linkedin} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "8px", borderRadius: "10px", border: "1.5px solid rgba(62,207,142,0.30)", color: GREEN_DARK, textDecoration: "none", fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, transition: "background 0.2s,border-color 0.2s" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(62,207,142,0.08)"; e.currentTarget.style.borderColor = GREEN; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(62,207,142,0.30)"; }}
+                <a href={f.linkedin} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "8px", borderRadius: "10px", border: "1.5px solid rgba(167,139,250,0.30)", color: GREEN_DARK, textDecoration: "none", fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, transition: "background 0.2s,border-color 0.2s" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(167,139,250,0.08)"; e.currentTarget.style.borderColor = GREEN; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(167,139,250,0.30)"; }}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
                   LinkedIn

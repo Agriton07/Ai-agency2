@@ -18,7 +18,7 @@ export default function HowItWorks() {
           {h.steps.map((s, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", flex: i < h.steps.length - 1 ? 1 : "none" }}>
               <button onClick={() => setActive(i)}
-                style={{ width: "40px", height: "40px", borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: i <= active ? GRAD : "var(--bg-secondary)", border: i === active ? "3px solid rgba(62,207,142,0.35)" : "3px solid transparent", boxShadow: i === active ? "0 0 0 5px rgba(62,207,142,0.12)" : "none", cursor: "pointer", transition: "all 0.3s" }}
+                style={{ width: "40px", height: "40px", borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: i <= active ? GRAD : "var(--bg-secondary)", border: i === active ? "3px solid rgba(167,139,250,0.35)" : "3px solid transparent", boxShadow: i === active ? "0 0 0 5px rgba(167,139,250,0.12)" : "none", cursor: "pointer", transition: "all 0.3s" }}
               >
                 {i < active ? <CheckIcon size={13}/> : <span style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "12px", color: i <= active ? "#fff" : "var(--text-muted)" }}>0{i + 1}</span>}
               </button>
@@ -73,7 +73,7 @@ export default function HowItWorks() {
         <div style={{ marginTop: "56px", ...card, padding: "28px 40px", display: "flex", alignItems: "center", justifyContent: "space-around", gap: "24px", flexWrap: "wrap" }}>
           {h.trust.map((item) => (
             <div key={item.val} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <div style={{ width: "38px", height: "38px", borderRadius: "11px", background: "rgba(62,207,142,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>
+              <div style={{ width: "38px", height: "38px", borderRadius: "11px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 17h14M5 17V11M8 17V7M11 17V4M14 17V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
               <div>

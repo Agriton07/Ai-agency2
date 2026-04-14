@@ -7,7 +7,7 @@ const ServiceVisual = ({ index }) => {
   if (index === 0) return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
       {["Trigger received", "AI processes", "Action executed", "Result delivered"].map((s, i) => (
-        <div key={i} style={{ display: "flex", alignItems: "center", gap: "9px", padding: "8px 12px", borderRadius: "10px", background: i === 1 ? "rgba(62,207,142,0.10)" : "var(--bg-secondary)", border: `1px solid ${i === 1 ? "rgba(62,207,142,0.28)" : "var(--border)"}` }}>
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: "9px", padding: "8px 12px", borderRadius: "10px", background: i === 1 ? "rgba(167,139,250,0.10)" : "var(--bg-secondary)", border: `1px solid ${i === 1 ? "rgba(167,139,250,0.28)" : "var(--border)"}` }}>
           <div style={{ width: "22px", height: "22px", borderRadius: "50%", background: i === 1 ? GRAD : "var(--bg-tertiary)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             {i === 1 ? <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M6 1L10 6L6 11L2 6L6 1Z" fill="white"/></svg> : <span style={{ fontSize: "9px", fontWeight: 700, color: "var(--text-muted)" }}>{i + 1}</span>}
           </div>
@@ -26,7 +26,7 @@ const ServiceVisual = ({ index }) => {
       <div style={{ display: "flex", alignItems: "flex-end", gap: "5px", height: "64px" }}>
         {[45, 60, 52, 78, 68, 94].map((h, i) => (
           <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
-            <div style={{ width: "100%", height: `${h}%`, borderRadius: "4px 4px 2px 2px", background: i === 5 ? GRAD : `rgba(62,207,142,${0.2 + i * 0.1})` }}/>
+            <div style={{ width: "100%", height: `${h}%`, borderRadius: "4px 4px 2px 2px", background: i === 5 ? GRAD : `rgba(167,139,250,${0.2 + i * 0.1})` }}/>
             <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "9px", color: "var(--text-muted)" }}>{["J","F","M","A","M","J"][i]}</span>
           </div>
         ))}
@@ -50,8 +50,8 @@ const ServiceVisual = ({ index }) => {
       <div><span style={{ color: "#f9a8d4" }}>const</span><span style={{ color: "#e5e7eb" }}> client </span><span style={{ color: "#60a5fa" }}>=</span><span style={{ color: "#a3e635" }}> new </span><span style={{ color: "#fbbf24" }}>ARPSolutions</span><span style={{ color: "#e5e7eb" }}>&#123;</span></div>
       <div style={{ paddingLeft: "14px" }}><span style={{ color: "#94a3b8" }}>apiKey: </span><span style={{ color: "#86efac" }}>'sk-arp-...'</span><span style={{ color: "#e5e7eb" }}>,</span></div>
       <div><span style={{ color: "#e5e7eb" }}>&#125;);</span></div>
-      <div style={{ marginTop: "8px", padding: "5px 9px", borderRadius: "6px", background: "rgba(62,207,142,0.12)", border: "1px solid rgba(62,207,142,0.25)" }}>
-        <span style={{ color: "#3ecf8e" }}>✓ Connected · 11ms latency</span>
+      <div style={{ marginTop: "8px", padding: "5px 9px", borderRadius: "6px", background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)" }}>
+        <span style={{ color: "#a78bfa" }}>✓ Connected · 11ms latency</span>
       </div>
     </div>
   );
@@ -83,13 +83,13 @@ const ServiceCard = ({ item, index }) => {
           </ul>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-          <div style={{ padding: "10px 14px", borderRadius: "12px", background: "rgba(62,207,142,0.08)", border: "1px solid rgba(62,207,142,0.20)" }}>
+          <div style={{ padding: "10px 14px", borderRadius: "12px", background: "rgba(167,139,250,0.08)", border: "1px solid rgba(167,139,250,0.20)" }}>
             <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "20px", ...gradText, lineHeight: 1.1 }}>{item.metric.val}</div>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", color: "var(--text-muted)", marginTop: "2px" }}>{item.metric.lbl}</div>
           </div>
-          <button style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: GREEN_DARK, background: "transparent", border: "1.5px solid rgba(62,207,142,0.35)", borderRadius: "11px", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", transition: "background 0.2s,border-color 0.2s" }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(62,207,142,0.08)"; e.currentTarget.style.borderColor = GREEN; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(62,207,142,0.35)"; }}
+          <button style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: GREEN_DARK, background: "transparent", border: "1.5px solid rgba(167,139,250,0.35)", borderRadius: "11px", padding: "9px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", transition: "background 0.2s,border-color 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(167,139,250,0.08)"; e.currentTarget.style.borderColor = GREEN; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(167,139,250,0.35)"; }}
           >
             {t.services.learnMore}<ArrowIcon/>
           </button>
@@ -97,7 +97,7 @@ const ServiceCard = ({ item, index }) => {
       </div>
 
       <div style={{ background: "var(--bg-tertiary)", borderLeft: isEven ? "1px solid var(--border)" : "none", borderRight: !isEven ? "1px solid var(--border)" : "none", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "center", order: isEven ? 2 : 1, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", bottom: "-50px", right: "-50px", width: "160px", height: "160px", borderRadius: "50%", background: "radial-gradient(circle,rgba(62,207,142,0.08) 0%,transparent 70%)", pointerEvents: "none" }}/>
+        <div style={{ position: "absolute", bottom: "-50px", right: "-50px", width: "160px", height: "160px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.08) 0%,transparent 70%)", pointerEvents: "none" }}/>
         <ServiceVisual index={index}/>
       </div>
     </div>
@@ -119,7 +119,7 @@ export default function Services() {
         </div>
 
         <div style={{ marginTop: "64px", borderRadius: "24px", padding: "48px 56px", background: "linear-gradient(135deg,#1c1917,#262421)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "32px", flexWrap: "wrap", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "260px", height: "260px", borderRadius: "50%", background: "radial-gradient(circle,rgba(62,207,142,0.12) 0%,transparent 70%)", pointerEvents: "none" }}/>
+          <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "260px", height: "260px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.12) 0%,transparent 70%)", pointerEvents: "none" }}/>
           <div style={{ position: "relative" }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>{s.ctaEyebrow}</p>
             <h3 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(22px,3vw,34px)", color: "#fff", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
@@ -127,9 +127,9 @@ export default function Services() {
             </h3>
           </div>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", position: "relative" }}>
-            <button onClick={() => scrollTo("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(62,207,142,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(62,207,142,0.40)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(62,207,142,0.30)"; }}
+            <button onClick={() => scrollTo("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
             >{s.ctaBtn1}<ArrowIcon white/></button>
             <button style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "rgba(255,255,255,0.70)", background: "none", border: "1.5px solid rgba(255,255,255,0.15)", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", transition: "border-color 0.2s,color 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.40)"; e.currentTarget.style.color = "#fff"; }}

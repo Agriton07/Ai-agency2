@@ -8,7 +8,7 @@ export default function Hero() {
   
   return (
     <section style={{ background: "var(--hero-bg)", minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", padding: "40px 0 80px" }}>
-      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(62,207,142,0.07) 0%, transparent 65%)", pointerEvents: "none" }}/>
+      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 65%)", pointerEvents: "none" }}/>
       <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(30,168,122,0.05) 0%, transparent 65%)", pointerEvents: "none" }}/>
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "60px", alignItems: "center" }}>
@@ -36,9 +36,9 @@ export default function Hero() {
 
           <div className="arp-fade-4" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <button onClick={() => scrollTo("contact")}
-              style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px", color: "#fff", background: GRAD, border: "none", padding: "13px 26px", borderRadius: "13px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", boxShadow: "0 4px 20px rgba(62,207,142,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(62,207,142,0.40)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(62,207,142,0.30)"; }}
+              style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px", color: "#fff", background: GRAD, border: "none", padding: "13px 26px", borderRadius: "13px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
             >
               {h.cta1}<ArrowIcon white/>
             </button>
@@ -76,7 +76,7 @@ export default function Hero() {
                   </div>
                   <span style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "var(--text-primary)" }}>{h.dashTitle}</span>
                 </div>
-                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: GREEN_DARK, background: "rgba(62,207,142,0.12)", padding: "3px 10px", borderRadius: "99px" }}>{h.dashLive}</span>
+                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: GREEN_DARK, background: "rgba(167,139,250,0.12)", padding: "3px 10px", borderRadius: "99px" }}>{h.dashLive}</span>
               </div>
 
               <div style={{ marginBottom: "20px" }}>
@@ -86,7 +86,7 @@ export default function Hero() {
                 </div>
                 <div style={{ display: "flex", alignItems: "flex-end", gap: "5px", height: "56px" }}>
                   {[40, 65, 50, 85, 70, 95, 80].map((h2, i) => (
-                    <div key={i} style={{ flex: 1, height: `${h2}%`, borderRadius: "4px 4px 2px 2px", background: i === 5 ? GRAD : `rgba(62,207,142,${0.2 + i * 0.1})` }}/>
+                    <div key={i} style={{ flex: 1, height: `${h2}%`, borderRadius: "4px 4px 2px 2px", background: i === 5 ? GRAD : `rgba(167,139,250,${0.2 + i * 0.1})` }}/>
                   ))}
                 </div>
               </div>

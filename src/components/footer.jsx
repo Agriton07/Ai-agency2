@@ -21,13 +21,13 @@ export default function Footer() {
       `}</style>
       <footer style={{ background: "linear-gradient(160deg,#1a1917 0%,#0f0e0d 100%)", position: "relative", overflow: "hidden" }}>
         {/* Glows de fondo */}
-        <div style={{ position: "absolute", top: "-120px", left: "-80px", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(62,207,142,0.05) 0%,transparent 65%)", pointerEvents: "none" }}/>
+        <div style={{ position: "absolute", top: "-120px", left: "-80px", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.05) 0%,transparent 65%)", pointerEvents: "none" }}/>
         <div style={{ position: "absolute", bottom: "-100px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle,rgba(30,168,122,0.06) 0%,transparent 65%)", pointerEvents: "none" }}/>
 
         {/* Banda CTA superior */}
         <div style={{ maxWidth: "1160px", margin: "0 auto", padding: "80px 24px 0" }}>
-          <div style={{ borderRadius: "24px", padding: "52px 56px", background: "linear-gradient(135deg,rgba(62,207,142,0.10),rgba(30,168,122,0.06))", border: "1px solid rgba(62,207,142,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: "-60px", right: "-60px", width: "240px", height: "240px", borderRadius: "50%", background: "radial-gradient(circle,rgba(62,207,142,0.12) 0%,transparent 70%)", pointerEvents: "none" }}/>
+          <div style={{ borderRadius: "24px", padding: "52px 56px", background: "linear-gradient(135deg,rgba(167,139,250,0.10),rgba(30,168,122,0.06))", border: "1px solid rgba(167,139,250,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: "-60px", right: "-60px", width: "240px", height: "240px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.12) 0%,transparent 70%)", pointerEvents: "none" }}/>
             <div style={{ position: "relative" }}>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: GREEN, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>{f.ctaEyebrow}</p>
               <h2 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(22px,3vw,36px)", color: "#fff", lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: "12px" }}>
@@ -36,9 +36,9 @@ export default function Footer() {
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.50)", maxWidth: "420px", lineHeight: 1.6 }}>{f.ctaDesc}</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", position: "relative" }}>
-              <button onClick={() => nav("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "13px 28px", borderRadius: "12px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(62,207,142,0.30)", transition: "transform 0.2s,box-shadow 0.2s", whiteSpace: "nowrap" }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(62,207,142,0.40)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(62,207,142,0.30)"; }}
+              <button onClick={() => nav("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "13px 28px", borderRadius: "12px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s", whiteSpace: "nowrap" }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
               >{f.ctaBtn1}<ArrowIcon white/></button>
               <button onClick={() => nav("services")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "14px", color: "rgba(255,255,255,0.50)", background: "none", border: "none", cursor: "pointer", textAlign: "center", transition: "color 0.15s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = GREEN)}
@@ -73,7 +73,7 @@ export default function Footer() {
               <div style={{ display: "flex", gap: "8px", marginBottom: "24px" }}>
                 {[["LinkedIn", <svg key="li" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>], ["X", <svg key="x" width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>]].map(([lbl, icon]) => (
                   <a key={lbl} href="#" aria-label={lbl} style={{ width: "34px", height: "34px", borderRadius: "9px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.50)", textDecoration: "none", transition: "all 0.2s" }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(62,207,142,0.15)"; e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(62,207,142,0.35)"; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(167,139,250,0.15)"; e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(167,139,250,0.35)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.50)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.10)"; }}
                   >{icon}</a>
                 ))}
@@ -82,7 +82,7 @@ export default function Footer() {
               {/* Newsletter */}
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.30)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "9px" }}>{f.newsletter}</p>
               {nlDone ? (
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 13px", borderRadius: "10px", background: "rgba(62,207,142,0.12)", border: "1px solid rgba(62,207,142,0.25)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "10px 13px", borderRadius: "10px", background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)" }}>
                   <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center" }}><CheckIcon/></div>
                   <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: GREEN }}>{f.nlSuccess}</span>
                 </div>

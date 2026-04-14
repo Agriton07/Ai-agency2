@@ -30,7 +30,7 @@ const ThemeToggle = () => {
   return (
     <button onClick={toggleTheme}
       style={{ width: "36px", height: "36px", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-tertiary)", border: "1px solid var(--border)", color: "var(--text-secondary)", cursor: "pointer", transition: "all 0.2s", flexShrink: 0 }}
-      onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(62,207,142,0.4)"; }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)"; }}
       onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; e.currentTarget.style.borderColor = "var(--border)"; }}
     >
       {theme === "dark" ? <SunIcon/> : <MoonIcon/>}
@@ -54,7 +54,7 @@ const LangSelector = () => {
     <div ref={ref} style={{ position: "relative" }}>
       <button onClick={() => setOpen((v) => !v)}
         style={{ display: "flex", alignItems: "center", gap: "5px", height: "36px", padding: "0 12px", borderRadius: "10px", background: "var(--bg-tertiary)", border: "1px solid var(--border)", color: "var(--text-secondary)", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.05em", transition: "all 0.2s", flexShrink: 0 }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(62,207,142,0.4)"; }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)"; }}
         onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; e.currentTarget.style.borderColor = "var(--border)"; }}
       >
         {lang.toUpperCase()}
@@ -64,7 +64,7 @@ const LangSelector = () => {
         <div style={{ position: "absolute", top: "calc(100% + 8px)", right: 0, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "12px", padding: "4px", boxShadow: "var(--shadow-md)", zIndex: 200, minWidth: "80px" }}>
           {LANGS.map((l) => (
             <button key={l.code} onClick={() => { changeLang(l.code); setOpen(false); }}
-              style={{ display: "block", width: "100%", textAlign: "center", padding: "8px 12px", borderRadius: "8px", background: lang === l.code ? "rgba(62,207,142,0.12)" : "transparent", color: lang === l.code ? GREEN_DARK : "var(--text-secondary)", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.05em", transition: "background 0.15s" }}
+              style={{ display: "block", width: "100%", textAlign: "center", padding: "8px 12px", borderRadius: "8px", background: lang === l.code ? "rgba(167,139,250,0.12)" : "transparent", color: lang === l.code ? GREEN_DARK : "var(--text-secondary)", border: "none", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.05em", transition: "background 0.15s" }}
               onMouseEnter={(e) => { if (lang !== l.code) e.currentTarget.style.background = "var(--bg-tertiary)"; }}
               onMouseLeave={(e) => { if (lang !== l.code) e.currentTarget.style.background = "transparent"; }}
             >
@@ -86,7 +86,7 @@ const Dropdown = ({ items, sectionId, visible }) => (
         onMouseEnter={(e) => (e.currentTarget.style.background = "var(--bg-tertiary)")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
-        <div style={{ width: "32px", height: "32px", borderRadius: "9px", background: "rgba(62,207,142,0.10)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", flexShrink: 0 }}>{item.icon}</div>
+        <div style={{ width: "32px", height: "32px", borderRadius: "9px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", flexShrink: 0 }}>{item.icon}</div>
         <div>
           <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: "var(--text-primary)" }}>{item.label}</div>
           <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-muted)", marginTop: "1px" }}>{item.desc}</div>
@@ -192,15 +192,15 @@ export default function Navbar({ activeSection }) {
             <ThemeToggle/>
             <LangSelector/>
             <a href="#" style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "14px", color: "var(--text-secondary)", textDecoration: "none", padding: "8px 14px", borderRadius: "10px", transition: "color 0.15s,background 0.15s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.background = "rgba(62,207,142,0.08)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.background = "rgba(167,139,250,0.08)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; e.currentTarget.style.background = "transparent"; }}
             >
               {t.nav.signIn}
             </a>
             <button onClick={() => scrollTo("contact")}
-              style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "9px 20px", borderRadius: "11px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px", boxShadow: "0 2px 12px rgba(62,207,142,0.28)", transition: "transform 0.2s, box-shadow 0.2s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(62,207,142,0.38)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(62,207,142,0.28)"; }}
+              style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "9px 20px", borderRadius: "11px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px", boxShadow: "0 2px 12px rgba(167,139,250,0.28)", transition: "transform 0.2s, box-shadow 0.2s" }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 6px 20px rgba(167,139,250,0.38)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 12px rgba(167,139,250,0.28)"; }}
             >
               {t.nav.getStarted}<ArrowIcon white/>
             </button>
@@ -210,7 +210,7 @@ export default function Navbar({ activeSection }) {
             <ThemeToggle/>
             <LangSelector/>
             <button onClick={() => setMobileOpen((v) => !v)}
-              style={{ width: "36px", height: "36px", borderRadius: "9px", background: mobileOpen ? "rgba(62,207,142,0.12)" : "var(--bg-tertiary)", border: "1px solid", borderColor: mobileOpen ? "rgba(62,207,142,0.4)" : "var(--border)", color: mobileOpen ? GREEN : "var(--text-primary)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}
+              style={{ width: "36px", height: "36px", borderRadius: "9px", background: mobileOpen ? "rgba(167,139,250,0.12)" : "var(--bg-tertiary)", border: "1px solid", borderColor: mobileOpen ? "rgba(167,139,250,0.4)" : "var(--border)", color: mobileOpen ? GREEN : "var(--text-primary)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}
             >
               {mobileOpen ? <CloseIcon/> : <MenuIcon/>}
             </button>
