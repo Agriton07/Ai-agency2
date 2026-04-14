@@ -1,3 +1,4 @@
+/* src/index.css */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -6,9 +7,23 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* Evita que la web se mueva de lado en móvil */
 }
 
 body {
   background: var(--bg-secondary, #fafafa);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Tipografía responsiva: Se hace más pequeña en móviles automáticamente */
+h1 { font-size: clamp(32px, 8vw, 76px) !important; }
+h2 { font-size: clamp(26px, 6vw, 52px) !important; }
+
+/* Ajuste de secciones para móviles */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 0 !important; /* Menos espacio vertical en móviles */
+  }
 }

@@ -11,7 +11,7 @@ export default function Hero() {
       <div style={{ position: "absolute", top: "-10%", right: "-5%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(62,207,142,0.07) 0%, transparent 65%)", pointerEvents: "none" }}/>
       <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(30,168,122,0.05) 0%, transparent 65%)", pointerEvents: "none" }}/>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "60px", alignItems: "center" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
           <div className="arp-fade-1">
             <span style={tag(false)}>
