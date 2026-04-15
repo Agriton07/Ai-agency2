@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 import { scrollTo } from "../utils/helper";
 import { GREEN, GREEN_DARK, GRAD, card, tag, gradText, SectionBadge, SectionTitle, SectionSub, GreenCheck, ArrowIcon } from "../utils/SharedUI";
 
@@ -104,6 +104,77 @@ const ServiceCard = ({ item, index }) => {
   );
 };
 
+// ─── Compact card for additional services ────────────────────────────────────
+const CompactServiceCard = ({ item }) => {
+  const { t } = useApp();
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      style={{
+        ...card,
+        padding: "28px 24px",
+        display: "flex", flexDirection: "column", gap: "14px",
+        boxShadow: hovered ? "var(--shadow-md)" : "var(--shadow-sm)",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        borderColor: hovered ? "rgba(167,139,250,0.30)" : "var(--border)",
+        transition: "box-shadow 0.25s, transform 0.25s, border-color 0.25s",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{
+          width: "40px", height: "40px", borderRadius: "11px",
+          background: hovered ? GRAD : "rgba(167,139,250,0.10)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "18px", flexShrink: 0, transition: "background 0.25s",
+        }}>
+          {item.icon}
+        </div>
+        <div>
+          <span style={tag(true)}>{item.tag}</span>
+        </div>
+      </div>
+      <h3 style={{
+        fontFamily: "'Fraunces',Georgia,serif", fontWeight: 800, fontSize: "18px",
+        lineHeight: 1.15, letterSpacing: "-0.02em", color: "var(--text-primary)", margin: 0,
+      }}>
+        {item.title}
+      </h3>
+      <p style={{
+        fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
+        color: "var(--text-secondary)", lineHeight: 1.65, margin: 0,
+      }}>
+        {item.desc}
+      </p>
+      <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "7px" }}>
+        {item.feats.map((f) => (
+          <li key={f} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <GreenCheck/>
+            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-secondary)", fontWeight: 500 }}>{f}</span>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={() => scrollTo("contact")}
+        style={{
+          marginTop: "auto", fontFamily: "'DM Sans',sans-serif", fontWeight: 600,
+          fontSize: "13px", color: GREEN_DARK, background: "transparent",
+          border: "1.5px solid rgba(167,139,250,0.35)", borderRadius: "10px",
+          padding: "8px 16px", cursor: "pointer",
+          display: "flex", alignItems: "center", gap: "5px",
+          transition: "background 0.2s, border-color 0.2s",
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(167,139,250,0.08)"; e.currentTarget.style.borderColor = GREEN; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(167,139,250,0.35)"; }}
+      >
+        {t.services.learnMore}<ArrowIcon/>
+      </button>
+    </div>
+  );
+};
+
 export default function Services() {
   const { t } = useApp();
   const s = t.services;
@@ -114,10 +185,34 @@ export default function Services() {
         <SectionTitle accent={s.titleAccent}>{s.title}</SectionTitle>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "64px" }}><SectionSub>{s.subtitle}</SectionSub></div>
 
+        {/* Main 4 featured services — alternating layout */}
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           {s.items.map((item, i) => <ServiceCard key={i} item={item} index={i}/>)}
         </div>
 
+        {/* 3 additional compact services */}
+        {s.moreItems && s.moreItems.length > 0 && (
+          <div style={{ marginTop: "48px" }}>
+            <p style={{
+              fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600,
+              color: "var(--text-muted)", textTransform: "uppercase",
+              letterSpacing: "0.10em", marginBottom: "20px", textAlign: "center",
+            }}>
+              {s.moreTitle}
+            </p>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "20px",
+            }}>
+              {s.moreItems.map((item, i) => (
+                <CompactServiceCard key={i} item={item}/>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Bottom CTA banner */}
         <div style={{ marginTop: "64px", borderRadius: "24px", padding: "48px 56px", background: "linear-gradient(135deg,#1c1917,#262421)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "32px", flexWrap: "wrap", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "260px", height: "260px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.12) 0%,transparent 70%)", pointerEvents: "none" }}/>
           <div style={{ position: "relative" }}>
@@ -131,7 +226,9 @@ export default function Services() {
               onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
             >{s.ctaBtn1}<ArrowIcon white/></button>
-            <button style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "rgba(255,255,255,0.70)", background: "none", border: "1.5px solid rgba(255,255,255,0.15)", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", transition: "border-color 0.2s,color 0.2s" }}
+            <button
+              onClick={() => scrollTo("pricing")}
+              style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "rgba(255,255,255,0.70)", background: "none", border: "1.5px solid rgba(255,255,255,0.15)", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", transition: "border-color 0.2s,color 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.40)"; e.currentTarget.style.color = "#fff"; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "rgba(255,255,255,0.70)"; }}
             >{s.ctaBtn2}</button>

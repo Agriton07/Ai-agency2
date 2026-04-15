@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, CheckIcon, ArrowIcon, gradText } from "../utils/SharedUI";
 
 const FOUNDERS = [
@@ -74,10 +74,10 @@ const ContactForm = ({ ejsReady }) => {
         </div>
       </div>
       
-      {fields.service && fields.service.includes("Automatización") && (
+      {fields.service && (fields.service.toLowerCase().includes("automation") || fields.service.toLowerCase().includes("automatiz") || fields.service.toLowerCase().includes("werkstroom")) && (
         <div style={{ animation: "arp-fadeUp 0.3s ease forwards" }}>
-          <label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>¿Qué proceso te quita más tiempo actualmente?</label>
-          <input name="extra_info" type="text" placeholder="Ej. Generación de reportes, on-boarding..." value={fields.extra_info} onChange={set("extra_info")} style={inputStyle} onFocus={fi} onBlur={fo}/>
+          <label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>What process takes the most of your time right now?</label>
+          <input name="extra_info" type="text" placeholder="e.g. Reporting, onboarding, lead follow-up..." value={fields.extra_info} onChange={set("extra_info")} style={inputStyle} onFocus={fi} onBlur={fo}/>
         </div>
       )}
 

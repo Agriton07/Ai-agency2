@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 import { scrollTo } from "../utils/helper";
 import { GREEN, GRAD, gradText, ArrowIcon, CheckIcon } from "../utils/SharedUI";
 
@@ -9,7 +9,7 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [nlDone, setNlDone] = useState(false);
   const nav = (id) => scrollTo(id);
-  const NAV_IDS = ["hero", "services", "how-it-works", "contact"];
+  const NAV_IDS = ["hero", "use-cases", "pricing", "faq", "contact"];
 
   return (
     <>

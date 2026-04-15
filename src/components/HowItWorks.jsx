@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 import { GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, GreenCheck, CheckIcon, gradText } from "../utils/SharedUI";
 
 export default function HowItWorks() {
