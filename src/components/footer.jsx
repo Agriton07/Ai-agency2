@@ -1,15 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GRAD, gradText, ArrowIcon, CheckIcon } from "../utils/SharedUI";
 
 export default function Footer() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const f = t.footer;
   const [email, setEmail] = useState("");
   const [nlDone, setNlDone] = useState(false);
-  const nav = (id) => scrollTo(id);
-  const NAV_IDS = ["hero", "use-cases", "pricing", "faq", "contact"];
+  const NAV_ROUTES = ["/", "/use-cases", "/pricing", "/faq", "/contact"];
 
   return (
     <>
@@ -36,11 +36,11 @@ export default function Footer() {
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "15px", color: "rgba(255,255,255,0.50)", maxWidth: "420px", lineHeight: 1.6 }}>{f.ctaDesc}</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", position: "relative" }}>
-              <button onClick={() => nav("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "13px 28px", borderRadius: "12px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s", whiteSpace: "nowrap" }}
+              <button onClick={() => navigate("/contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "13px 28px", borderRadius: "12px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s", whiteSpace: "nowrap" }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
               >{f.ctaBtn1}<ArrowIcon white/></button>
-              <button onClick={() => nav("services")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "14px", color: "rgba(255,255,255,0.50)", background: "none", border: "none", cursor: "pointer", textAlign: "center", transition: "color 0.15s" }}
+              <button onClick={() => navigate("/services")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "14px", color: "rgba(255,255,255,0.50)", background: "none", border: "none", cursor: "pointer", textAlign: "center", transition: "color 0.15s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = GREEN)}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.50)")}
               >{f.ctaBtn2}</button>
@@ -101,7 +101,7 @@ export default function Footer() {
             <div>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "16px" }}>{f.colSolutions}</p>
               {t.services.items.map((item) => (
-                <button key={item.title} onClick={() => nav("services")} style={{ display: "block", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: "0 0 11px", textAlign: "left", transition: "color 0.15s" }}
+                <button key={item.title} onClick={() => navigate("/services")} style={{ display: "block", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: "0 0 11px", textAlign: "left", transition: "color 0.15s" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = GREEN)}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
                 >{item.title}</button>
@@ -111,7 +111,7 @@ export default function Footer() {
             <div>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "16px" }}>{f.colNavigate}</p>
               {f.navLinks.map((label, i) => (
-                <button key={label} onClick={() => nav(NAV_IDS[i])} style={{ display: "block", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: "0 0 11px", textAlign: "left", transition: "color 0.15s" }}
+                <button key={label} onClick={() => navigate(NAV_ROUTES[i])} style={{ display: "block", fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)", background: "none", border: "none", cursor: "pointer", padding: "0 0 11px", textAlign: "left", transition: "color 0.15s" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = GREEN)}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
                 >{label}</button>

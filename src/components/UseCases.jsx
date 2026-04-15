@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, ArrowIcon, gradText } from "../utils/SharedUI";
 
 const UseCaseCard = ({ item, index }) => {
@@ -103,6 +103,7 @@ const UseCaseCard = ({ item, index }) => {
 };
 
 export default function UseCases() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const u = t.useCases;
 
@@ -163,7 +164,7 @@ export default function UseCases() {
             </h3>
           </div>
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => navigate("/contact")}
             style={{
               fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
               color: "#fff", background: GRAD, border: "none",

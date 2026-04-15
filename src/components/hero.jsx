@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GRAD, card, tag, gradText, CheckIcon, ArrowIcon, GREEN_DARK } from "../utils/SharedUI";
 
 export default function Hero() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const h = t.hero;
 
@@ -54,7 +55,7 @@ export default function Hero() {
           <div className="arp-fade-4" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             {/* Primary CTA → contact */}
             <button
-              onClick={() => scrollTo("contact")}
+              onClick={() => navigate("/contact")}
               style={{
                 fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px",
                 color: "#fff", background: GRAD, border: "none",
@@ -71,7 +72,7 @@ export default function Hero() {
 
             {/* Secondary CTA → how it works */}
             <button
-              onClick={() => scrollTo("how-it-works")}
+              onClick={() => navigate("/services")}
               style={{
                 fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px",
                 color: "var(--text-primary)", background: "transparent",
@@ -124,7 +125,7 @@ export default function Hero() {
         </div>
 
         {/* Right: dashboard card */}
-        <div className="arp-fade-3" style={{
+        <div className="arp-fade-3 hero-right-panel" style={{
           display: "flex", justifyContent: "flex-end", paddingBottom: "32px",
         }}>
           <div style={{ width: "100%", maxWidth: "380px", position: "relative" }}>

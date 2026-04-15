@@ -7,7 +7,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* Evita que la web se mueva de lado en móvil */
+  overflow-x: hidden;
 }
 
 body {
@@ -17,13 +17,130 @@ body {
   width: 100%;
 }
 
-/* Tipografía responsiva: Se hace más pequeña en móviles automáticamente */
-h1 { font-size: clamp(32px, 8vw, 76px) !important; }
-h2 { font-size: clamp(26px, 6vw, 52px) !important; }
+img, svg {
+  max-width: 100%;
+}
 
-/* Ajuste de secciones para móviles */
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE-FIRST RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Section vertical spacing ─────────────────────────────────── */
 @media (max-width: 768px) {
   section {
-    padding: 60px 0 !important; /* Menos espacio vertical en móviles */
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
   }
 }
+
+/* ── Service feature cards: forced 2-col → 1-col ─────────────── */
+@media (max-width: 768px) {
+  .service-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .service-card-text {
+    order: 1 !important;
+    padding: 28px 22px !important;
+  }
+  .service-card-visual {
+    order: 2 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid var(--border) !important;
+    padding: 22px 20px !important;
+    min-height: 160px;
+  }
+}
+
+/* ── Service card: bottom row (metric + button) stack on mobile ─ */
+@media (max-width: 480px) {
+  .service-card-footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .service-card-footer > button {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+}
+
+/* ── Contact page: sidebar + form → single column ────────────── */
+@media (max-width: 900px) {
+  .contact-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Contact form field rows: side-by-side → stacked ─────────── */
+@media (max-width: 600px) {
+  .contact-form-row {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-form-inner {
+    padding: 24px 18px !important;
+  }
+}
+
+/* ── Hero: hide dashboard card on mobile ──────────────────────── */
+@media (max-width: 900px) {
+  .hero-right-panel {
+    display: none !important;
+  }
+}
+
+/* ── Dark CTA banners (Services, UseCases) ────────────────────── */
+@media (max-width: 640px) {
+  .section-cta-banner {
+    padding: 32px 20px !important;
+    text-align: center !important;
+    gap: 24px !important;
+  }
+  .section-cta-banner .cta-btns {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
+
+/* ── Footer top CTA band ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .footer-cta-banner {
+    padding: 36px 20px !important;
+    gap: 28px !important;
+  }
+}
+
+/* ── Home page dark banner ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .dark-cta-banner {
+    padding: 36px 20px !important;
+  }
+}
+
+/* ── Touch targets: primary CTA buttons ───────────────────────── */
+@media (max-width: 900px) {
+  .touch-btn {
+    min-height: 44px !important;
+  }
+  .mobile-menu-btn {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 10px !important;
+  }
+}
+
+/* ── Footer grid responsive ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+  .footer-brand { grid-column: 1 / -1 !important; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Keyframes (shared across components) ─────────────────────── */
+@keyframes arp-fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes arp-blink  { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes arp-spin   { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes arp-ping   { 75%, 100% { transform: scale(2); opacity: 0; } }
+@keyframes fpulse     { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }

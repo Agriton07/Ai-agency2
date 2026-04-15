@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
 import { GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, gradText } from "../utils/SharedUI";
-import { scrollTo } from "../utils/helper";
 
 export default function Pricing() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const p = t.pricing;
 
@@ -130,7 +131,7 @@ export default function Pricing() {
 
                 {/* CTA */}
                 <button
-                  onClick={() => scrollTo("contact")}
+                  onClick={() => navigate("/contact")}
                   style={{
                     width: "100%",
                     fontFamily: "'DM Sans',sans-serif", fontWeight: 600,

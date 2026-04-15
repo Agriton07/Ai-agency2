@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, ArrowIcon, gradText } from "../utils/SharedUI";
 
 export default function About() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const a = t.about;
 
@@ -122,7 +123,7 @@ export default function About() {
         {/* CTA */}
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => navigate("/contact")}
             style={{
               fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px",
               color: "#fff", background: GRAD, border: "none",

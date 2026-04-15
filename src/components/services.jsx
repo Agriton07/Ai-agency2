@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GREEN_DARK, GRAD, card, tag, gradText, SectionBadge, SectionTitle, SectionSub, GreenCheck, ArrowIcon } from "../utils/SharedUI";
 
 const ServiceVisual = ({ index }) => {
@@ -106,6 +106,7 @@ const ServiceCard = ({ item, index }) => {
 
 // ─── Compact card for additional services ────────────────────────────────────
 const CompactServiceCard = ({ item }) => {
+  const navigate = useNavigate();
   const { t } = useApp();
   const [hovered, setHovered] = useState(false);
 
@@ -157,7 +158,7 @@ const CompactServiceCard = ({ item }) => {
         ))}
       </ul>
       <button
-        onClick={() => scrollTo("contact")}
+        onClick={() => navigate("/contact")}
         style={{
           marginTop: "auto", fontFamily: "'DM Sans',sans-serif", fontWeight: 600,
           fontSize: "13px", color: GREEN_DARK, background: "transparent",
@@ -176,6 +177,7 @@ const CompactServiceCard = ({ item }) => {
 };
 
 export default function Services() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const s = t.services;
   return (
@@ -222,12 +224,12 @@ export default function Services() {
             </h3>
           </div>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", position: "relative" }}>
-            <button onClick={() => scrollTo("contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
+            <button onClick={() => navigate("/contact")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "7px", boxShadow: "0 4px 20px rgba(167,139,250,0.30)", transition: "transform 0.2s,box-shadow 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
             >{s.ctaBtn1}<ArrowIcon white/></button>
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={() => navigate("/pricing")}
               style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "rgba(255,255,255,0.70)", background: "none", border: "1.5px solid rgba(255,255,255,0.15)", padding: "12px 26px", borderRadius: "13px", cursor: "pointer", transition: "border-color 0.2s,color 0.2s" }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.40)"; e.currentTarget.style.color = "#fff"; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "rgba(255,255,255,0.70)"; }}

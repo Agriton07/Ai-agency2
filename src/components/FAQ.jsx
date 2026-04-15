@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
-import { scrollTo } from "../utils/helper";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, ArrowIcon, gradText } from "../utils/SharedUI";
 
 const ChevronDown = ({ open }) => (
@@ -84,6 +84,7 @@ const FAQItem = ({ item, isOpen, onToggle, index }) => {
 };
 
 export default function FAQ() {
+  const navigate = useNavigate();
   const { t } = useApp();
   const f = t.faq;
   const [openIdx, setOpenIdx] = useState(null);
@@ -134,7 +135,7 @@ export default function FAQ() {
             Book a free 30-minute call and we'll answer everything.
           </p>
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => navigate("/contact")}
             style={{
               fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
               color: "#fff", background: GRAD, border: "none",
