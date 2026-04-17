@@ -151,12 +151,25 @@ export default function Navbar() {
   const [mobileOpen,  setMobileOpen]  = useState(false);
   const [ddOpen,      setDdOpen]      = useState(false);
   const [mobExpanded, setMobExpanded] = useState(null);
-  const ddRef = useRef(null);
+  const [visible,     setVisible]     = useState(true);
+  const [progress,    setProgress]    = useState(0);
+  const ddRef     = useRef(null);
+  const lastScrollY = useRef(0);
 
   const pathname = location.pathname;
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 12);
+    const fn = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      // Auto-hide: always visible near top, show on scroll-up, hide on scroll-down
+      setVisible(y < 80 || y <= lastScrollY.current);
+      lastScrollY.current = y;
+      // Scroll progress 0–100
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - doc.clientHeight;
+      setProgress(scrollable > 0 ? (y / scrollable) * 100 : 0);
+    };
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -229,15 +242,19 @@ export default function Navbar() {
         body{background:var(--bg-secondary);-webkit-font-smoothing:antialiased}
       `}</style>
 
-      <header style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        background: scrolled ? "var(--nav-bg)" : "transparent",
-        backdropFilter: scrolled ? "blur(18px) saturate(1.4)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(18px) saturate(1.4)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-        boxShadow: scrolled ? "var(--shadow-sm)" : "none",
-        transition: "background 0.3s, box-shadow 0.3s, border-color 0.3s",
-      }}>
+      <motion.header
+        animate={{ y: visible ? 0 : "-110%" }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
+          background: scrolled ? "var(--nav-bg)" : "transparent",
+          backdropFilter: scrolled ? "blur(18px) saturate(1.4)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(18px) saturate(1.4)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+          boxShadow: scrolled ? "var(--shadow-sm)" : "none",
+          transition: "background 0.3s, box-shadow 0.3s, border-color 0.3s",
+        }}
+      >
         {/* ── Desktop bar ── */}
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", height: "68px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
           <Logo/>
@@ -381,7 +398,12 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+
+        {/* ── Scroll progress bar ── */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "2px", overflow: "hidden", opacity: scrolled ? 1 : 0, transition: "opacity 0.4s", pointerEvents: "none" }}>
+          <div style={{ height: "100%", background: "linear-gradient(90deg, #a78bfa, #7c3aed)", transform: `scaleX(${progress / 100})`, transformOrigin: "left", transition: "transform 0.1s linear" }}/>
+        </div>
+      </motion.header>
 
       <div style={{ height: "68px" }}/>
     </>

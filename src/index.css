@@ -1,146 +1,206 @@
-/* src/index.css */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ═══════════════════════════════════════════════════════════════
+   AKJ.ai — Global Design Tokens & Responsive System
+   ═══════════════════════════════════════════════════════════════ */
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   background: var(--bg-secondary, #fafafa);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
 }
+img, svg, video { max-width: 100%; display: block; }
 
-img, svg {
-  max-width: 100%;
+/* ── Typography Scale Tokens ─────────────────────────────────── */
+:root {
+  /* Type sizes — fluid between mobile and desktop */
+  --type-display: clamp(48px, 6.5vw, 84px);  /* Hero H1 */
+  --type-h1:      clamp(40px, 5vw, 72px);    /* Page H1 */
+  --type-h2:      clamp(28px, 3.2vw, 50px);  /* Section titles */
+  --type-h3:      clamp(18px, 2vw, 22px);    /* Card titles */
+  --type-h4:      16px;                       /* Sub-section titles */
+  --type-lg:      18px;                       /* Lead body */
+  --type-base:    15px;                       /* Standard body */
+  --type-sm:      13px;                       /* Secondary body */
+  --type-xs:      12px;                       /* Meta / captions */
+  --type-micro:   11px;                       /* Tags / overlines */
+
+  /* Line height scale */
+  --leading-tight:  1.05;
+  --leading-snug:   1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed:1.70;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.03em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.06em;
+  --tracking-wider:   0.10em;
+  --tracking-widest:  0.14em;
+
+  /* ── 8-point Spacing Scale ───────────────────────────────── */
+  --sp-1:   4px;
+  --sp-2:   8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-28: 112px;
+  --sp-32: 128px;
+
+  /* ── Section padding (fluid) ─────────────────────────────── */
+  --section-py: clamp(72px, 9vw, 120px);
+  --section-py-sm: clamp(52px, 6vw, 80px);
+
+  /* ── Container widths ────────────────────────────────────── */
+  --container-sm:  760px;
+  --container-md:  960px;
+  --container-lg: 1200px;
+  --container-xl: 1400px;
+
+  /* ── Z-index scale ───────────────────────────────────────── */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   150;
+  --z-nav:      200;
+  --z-modal:    300;
+  --z-toast:    400;
+
+  /* ── Radius scale ────────────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* ── Motion tokens ───────────────────────────────────────── */
+  --duration-fast:   180ms;
+  --duration-base:   360ms;
+  --duration-slow:   540ms;
+  --ease-out:        cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ── Brand gradient ──────────────────────────────────────── */
+  --grad: linear-gradient(135deg, #a78bfa, #7c3aed);
+  --grad-text-glow: 0 0 40px rgba(167,139,250,0.20);
 }
 
+/* ── Global interactive base ──────────────────────────────────── */
+button  { font-family: inherit; cursor: pointer; }
+a       { color: inherit; }
+
+/* ── Typography defaults ──────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 800;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+p { line-height: var(--leading-relaxed); color: var(--text-secondary); }
+
 /* ═══════════════════════════════════════════════════════════════
-   MOBILE-FIRST RESPONSIVE OVERRIDES
+   RESPONSIVE LAYOUT OVERRIDES
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── Section vertical spacing ─────────────────────────────────── */
+/* ── Section vertical padding ─────────────────────────────────── */
 @media (max-width: 768px) {
-  section {
-    padding-top: 64px !important;
-    padding-bottom: 64px !important;
-  }
+  section { padding-top: 64px !important; padding-bottom: 72px !important; }
 }
 
 /* ── Service feature cards: forced 2-col → 1-col ─────────────── */
 @media (max-width: 768px) {
-  .service-card-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .service-card-text {
-    order: 1 !important;
-    padding: 28px 22px !important;
-  }
-  .service-card-visual {
+  .service-card-grid    { grid-template-columns: 1fr !important; }
+  .service-card-text    { order: 1 !important; padding: 28px 22px !important; }
+  .service-card-visual  {
     order: 2 !important;
-    border-left: none !important;
+    border-left:  none !important;
     border-right: none !important;
     border-top: 1px solid var(--border) !important;
     padding: 22px 20px !important;
-    min-height: 160px;
   }
 }
 
-/* ── Service card: bottom row (metric + button) stack on mobile ─ */
-@media (max-width: 480px) {
-  .service-card-footer {
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-  .service-card-footer > button {
-    width: 100% !important;
-    justify-content: center !important;
-    min-height: 44px !important;
-  }
-}
-
-/* ── Contact page: sidebar + form → single column ────────────── */
+/* ── Services bento grid ──────────────────────────────────────── */
 @media (max-width: 900px) {
-  .contact-main-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .services-home-bento { grid-template-columns: repeat(3, 1fr) !important; }
+  .services-home-bento > * { grid-column: span 1 !important; }
 }
-
-/* ── Contact form field rows: side-by-side → stacked ─────────── */
-@media (max-width: 600px) {
-  .contact-form-row {
-    grid-template-columns: 1fr !important;
-  }
-  .contact-form-inner {
-    padding: 24px 18px !important;
-  }
-}
-
-/* ── Hero: hide dashboard card on mobile ──────────────────────── */
-@media (max-width: 900px) {
-  .hero-right-panel {
-    display: none !important;
-  }
-}
-
-/* ── Dark CTA banners (Services, UseCases) ────────────────────── */
 @media (max-width: 640px) {
-  .section-cta-banner {
-    padding: 32px 20px !important;
-    text-align: center !important;
-    gap: 24px !important;
-  }
-  .section-cta-banner .cta-btns {
-    justify-content: center !important;
-    width: 100% !important;
-  }
+  .services-home-bento { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+}
+@media (max-width: 420px) {
+  .services-home-bento { grid-template-columns: 1fr !important; }
 }
 
-/* ── Footer top CTA band ──────────────────────────────────────── */
-@media (max-width: 640px) {
-  .footer-cta-banner {
-    padding: 36px 20px !important;
-    gap: 28px !important;
-  }
-}
-
-/* ── Home page dark banner ────────────────────────────────────── */
-@media (max-width: 640px) {
-  .dark-cta-banner {
-    padding: 36px 20px !important;
-  }
-}
-
-/* ── Touch targets: primary CTA buttons ───────────────────────── */
+/* ── Process steps: 4-col → 2-col → 1-col ────────────────────── */
 @media (max-width: 900px) {
-  .touch-btn {
-    min-height: 44px !important;
-  }
-  .mobile-menu-btn {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 10px !important;
-  }
+  .process-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 540px) {
+  .process-grid { grid-template-columns: 1fr !important; }
+  .process-connector { display: none !important; }
 }
 
-/* ── Footer grid responsive ───────────────────────────────────── */
+/* ── Contact main grid ────────────────────────────────────────── */
+@media (max-width: 900px)  { .contact-main-grid  { grid-template-columns: 1fr !important; } }
+@media (max-width: 600px)  { .contact-form-row   { grid-template-columns: 1fr !important; } }
+@media (max-width: 600px)  { .contact-form-inner { padding: 24px 18px !important; } }
+
+/* ── Hero right panel ─────────────────────────────────────────── */
+@media (max-width: 900px) { .hero-right-panel { display: none !important; } }
+
+/* ── Dark CTA banners ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .section-cta-banner { padding: 32px 20px !important; text-align: center !important; }
+  .footer-cta-banner  { padding: 36px 20px !important; }
+  .dark-cta-banner    { padding: 36px 20px !important; }
+}
+
+/* ── Mobile touch targets ─────────────────────────────────────── */
 @media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+  .mobile-menu-btn { width: 44px !important; height: 44px !important; }
+}
+
+/* ── Footer grid ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .footer-grid  { grid-template-columns: 1fr 1fr !important; }
   .footer-brand { grid-column: 1 / -1 !important; }
 }
-@media (max-width: 480px) {
-  .footer-grid { grid-template-columns: 1fr !important; }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr !important; } }
+
+/* ── Metric strip ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .metric-strip { grid-template-columns: 1fr 1fr !important; gap: 28px 16px !important; }
 }
 
-/* ── Keyframes (shared across components) ─────────────────────── */
-@keyframes arp-fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes arp-blink  { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-@keyframes arp-spin   { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes arp-ping   { 75%, 100% { transform: scale(2); opacity: 0; } }
-@keyframes fpulse     { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+/* ── HowItWorks sidebar grid ──────────────────────────────────── */
+@media (max-width: 800px) {
+  .hiw-grid { grid-template-columns: 1fr !important; }
+  .hiw-sidebar { display: none !important; }
+}
+
+/* ══ Shared animation keyframes (referenced by components) ═══ */
+@keyframes arp-fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes arp-blink  { 0%,100%{opacity:1} 50%{opacity:.35} }
+@keyframes arp-spin   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes arp-ping   { 75%,100%{transform:scale(2);opacity:0} }
+@keyframes fpulse     { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+.arp-fade-1{opacity:0;animation:arp-fadeUp .6s ease .10s forwards}
+.arp-fade-2{opacity:0;animation:arp-fadeUp .6s ease .22s forwards}
+.arp-fade-3{opacity:0;animation:arp-fadeUp .6s ease .34s forwards}
+.arp-fade-4{opacity:0;animation:arp-fadeUp .6s ease .46s forwards}
+.arp-fade-5{opacity:0;animation:arp-fadeUp .6s ease .58s forwards}
