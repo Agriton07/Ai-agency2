@@ -126,13 +126,13 @@ export default function FAQ() {
             fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "22px",
             color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: "10px",
           }}>
-            Still have questions?
+            {f.ctaTitle}
           </p>
           <p style={{
             fontFamily: "'DM Sans',sans-serif", fontSize: "15px",
             color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "24px",
           }}>
-            Book a free 30-minute call and we'll answer everything.
+            {f.ctaDesc}
           </p>
           <button
             onClick={() => navigate("/contact")}
@@ -147,7 +147,7 @@ export default function FAQ() {
             onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.38)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.28)"; }}
           >
-            Book a free call <ArrowIcon white/>
+            {f.ctaBtn} <ArrowIcon white/>
           </button>
         </div>
       </div>

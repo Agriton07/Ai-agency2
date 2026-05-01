@@ -3,9 +3,9 @@ import { useApp } from "../context/useApp";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, CheckIcon, ArrowIcon, gradText } from "../utils/SharedUI";
 
 const FOUNDERS = [
-  { name: "Justin Kuijper",    initials: "JK", phone: "+31 6 [number]", email: "justin@adrimalu.ai",    linkedin: "#" },
-  { name: "Alexander Janssen", initials: "AJ", phone: "+31 6 [number]", email: "alexander@adrimalu.ai", linkedin: "#" },
-  { name: "Adrian Alvarez",    initials: "AA", phone: "+34 6 [number]", email: "adrian@adrimalu.ai",    linkedin: "#" },
+  { name: "Justin Kuijper",    initials: "JK", email: "justin@akj.ai",    linkedin: "#" },
+  { name: "Alexander Janssen", initials: "AJ", email: "alexander@akj.ai", linkedin: "#" },
+  { name: "Adrian Alvarez",    initials: "AA", email: "adrian@akj.ai",    linkedin: "#" },
 ];
 
 const EMAILJS_SERVICE_ID  = "service_7qaapmd";
@@ -76,8 +76,8 @@ const ContactForm = ({ ejsReady }) => {
       
       {fields.service && (fields.service.toLowerCase().includes("automation") || fields.service.toLowerCase().includes("automatiz") || fields.service.toLowerCase().includes("werkstroom")) && (
         <div style={{ animation: "arp-fadeUp 0.3s ease forwards" }}>
-          <label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>What process takes the most of your time right now?</label>
-          <input name="extra_info" type="text" placeholder="e.g. Reporting, onboarding, lead follow-up..." value={fields.extra_info} onChange={set("extra_info")} style={inputStyle} onFocus={fi} onBlur={fo}/>
+          <label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>{c.extraLabel || "What process takes the most of your time right now?"}</label>
+          <input name="extra_info" type="text" placeholder={c.extraPh || "e.g. Reporting, onboarding, lead follow-up…"} value={fields.extra_info} onChange={set("extra_info")} style={inputStyle} onFocus={fi} onBlur={fo}/>
         </div>
       )}
 
@@ -136,7 +136,7 @@ export default function Contact() {
         <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "28px", alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px" }}>{c.founders}</p>
-            {FOUNDERS.map((f) => (
+            {FOUNDERS.map((f, i) => (
               <div key={f.name} style={{ ...card, padding: "20px", display: "flex", flexDirection: "column", gap: "14px", transition: "box-shadow 0.25s,transform 0.25s" }}
                 onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "var(--shadow-md)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "var(--shadow-sm)"; e.currentTarget.style.transform = "translateY(0)"; }}
@@ -147,21 +147,21 @@ export default function Contact() {
                   </div>
                   <div>
                     <p style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "15px", color: "var(--text-primary)", letterSpacing: "-0.01em", marginBottom: "2px" }}>{f.name}</p>
-                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 600, color: GREEN_DARK, textTransform: "uppercase", letterSpacing: "0.07em" }}>Co-Founder</p>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 600, color: GREEN_DARK, textTransform: "uppercase", letterSpacing: "0.07em" }}>{t.about?.founders?.[i]?.role || "Co-Founder"}</p>
                   </div>
                 </div>
                 <div style={{ borderTop: "1px solid var(--border)" }}/>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {[{ href: `tel:${f.phone}`, text: f.phone, icon: <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M6.5 3.5c.5 1.5 1 2.5 1.5 3L6 8.5c1 2 2.5 3.5 4.5 4.5l2-2c.5.5 1.5 1 3 1.5v3c0 .5-.5 1-1 1C7.5 17 3 12.5 3 7c0-.5.5-1 1-1l2.5-.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg> }, { href: `mailto:${f.email}`, text: f.email, icon: <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M3 5h14v10H3V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 5l7 6 7-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> }].map((row) => (
-                    <a key={row.href} href={row.href}
-                      style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}
-                      onMouseEnter={(e) => e.currentTarget.querySelector("span").style.color = GREEN_DARK}
-                      onMouseLeave={(e) => e.currentTarget.querySelector("span").style.color = "var(--text-secondary)"}
-                    >
-                      <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>{row.icon}</div>
-                      <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-secondary)", transition: "color 0.15s" }}>{row.text}</span>
-                    </a>
-                  ))}
+                  <a href={`mailto:${f.email}`}
+                    style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}
+                    onMouseEnter={(e) => e.currentTarget.querySelector("span").style.color = GREEN_DARK}
+                    onMouseLeave={(e) => e.currentTarget.querySelector("span").style.color = "var(--text-secondary)"}
+                  >
+                    <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: "rgba(167,139,250,0.10)", display: "flex", alignItems: "center", justifyContent: "center", color: GREEN_DARK, flexShrink: 0 }}>
+                      <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><path d="M3 5h14v10H3V5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M3 5l7 6 7-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                    </div>
+                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-secondary)", transition: "color 0.15s" }}>{f.email}</span>
+                  </a>
                 </div>
                 <a href={f.linkedin} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", padding: "8px", borderRadius: "10px", border: "1.5px solid rgba(167,139,250,0.30)", color: GREEN_DARK, textDecoration: "none", fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, transition: "background 0.2s,border-color 0.2s" }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(167,139,250,0.08)"; e.currentTarget.style.borderColor = GREEN; }}

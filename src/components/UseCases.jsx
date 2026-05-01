@@ -159,8 +159,8 @@ export default function UseCases() {
               fontSize: "clamp(20px,2.8vw,30px)", color: "#fff",
               lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0,
             }}>
-              Let's map out yours in{" "}
-              <span style={gradText}>30 minutes.</span>
+              {u.ctaTitle}{" "}
+              <span style={gradText}>{u.ctaAccent}</span>
             </h3>
           </div>
           <button

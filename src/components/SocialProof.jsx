@@ -1,103 +1,168 @@
+import { useState } from "react";
 import { useApp } from "../context/useApp";
-import { GREEN, GRAD, card, SectionBadge, SectionTitle, SectionSub } from "../utils/SharedUI";
+import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub } from "../utils/SharedUI";
+
+const DIFF_ICONS = [
+  // Fixed price — shield check
+  <svg key="price" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2l9 4v6c0 5.25-3.75 10.15-9 11.25C6.75 22.15 3 17.25 3 12V6l9-4z"/>
+    <path d="M9 12l2 2 4-4"/>
+  </svg>,
+  // Speed — bolt
+  <svg key="speed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+  </svg>,
+  // Founders — users
+  <svg key="founders" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+  </svg>,
+  // Custom build — settings sliders
+  <svg key="custom" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="4" y1="21" x2="4" y2="14"/>
+    <line x1="4" y1="10" x2="4" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="12"/>
+    <line x1="12" y1="8" x2="12" y2="3"/>
+    <line x1="20" y1="21" x2="20" y2="16"/>
+    <line x1="20" y1="12" x2="20" y2="3"/>
+    <line x1="1" y1="14" x2="7" y2="14"/>
+    <line x1="9" y1="8" x2="15" y2="8"/>
+    <line x1="17" y1="16" x2="23" y2="16"/>
+  </svg>,
+];
+
+const CheckCircle = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+function DiffCard({ icon, title, desc }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      style={{
+        ...card,
+        padding: "32px 28px",
+        transition: "border-color 0.22s, box-shadow 0.22s, transform 0.22s",
+        borderColor: hovered ? "rgba(167,139,250,0.40)" : "var(--border)",
+        boxShadow: hovered ? "var(--shadow-md)" : "var(--shadow-sm)",
+        transform: hovered ? "translateY(-5px)" : "translateY(0)",
+        cursor: "default",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{
+        width: "48px", height: "48px", borderRadius: "14px",
+        background: hovered ? GRAD : "rgba(167,139,250,0.10)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color: hovered ? "#fff" : GREEN_DARK,
+        marginBottom: "20px",
+        transition: "background 0.25s, color 0.25s",
+        flexShrink: 0,
+      }}>
+        {icon}
+      </div>
+      <p style={{
+        fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "18px",
+        color: "var(--text-primary)", letterSpacing: "-0.02em",
+        marginBottom: "10px", lineHeight: 1.2,
+      }}>
+        {title}
+      </p>
+      <p style={{
+        fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
+        color: "var(--text-secondary)", lineHeight: 1.7,
+      }}>
+        {desc}
+      </p>
+    </div>
+  );
+}
 
 export default function SocialProof() {
   const { t } = useApp();
   const s = t.socialProof;
 
+  const diffs = [
+    { icon: DIFF_ICONS[0], title: s.diff1Title, desc: s.diff1Desc },
+    { icon: DIFF_ICONS[1], title: s.diff2Title, desc: s.diff2Desc },
+    { icon: DIFF_ICONS[2], title: s.diff3Title, desc: s.diff3Desc },
+    { icon: DIFF_ICONS[3], title: s.diff4Title, desc: s.diff4Desc },
+  ];
+
   return (
-    <section style={{ background: "var(--section-alt)", padding: "80px 0" }}>
+    <section style={{ background: "var(--section-alt)", padding: "100px 0" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+
         <SectionBadge>{s.badge}</SectionBadge>
         <SectionTitle accent={s.titleAccent}>{s.title}</SectionTitle>
-        <SectionSub>{s.subtitle}</SectionSub>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "64px" }}>
+          <SectionSub>{s.subtitle}</SectionSub>
+        </div>
 
-        {/* Logo strip */}
-        <div style={{ marginTop: "48px", display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
-          {Array.from({ length: 7 }).map((_, i) => (
-            <div key={i} style={{
-              width: "130px", height: "48px", borderRadius: "12px",
-              background: "var(--bg-card)", border: "1px solid var(--border)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "border-color 0.2s, box-shadow 0.2s",
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(167,139,250,0.35)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(167,139,250,0.10)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }}
-            >
-              <span style={{
-                fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 700,
-                color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.12em",
-              }}>
-                {s.logoSlot}
-              </span>
-            </div>
+        {/* Differentiator grid */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          gap: "20px",
+          marginBottom: "40px",
+        }}>
+          {diffs.map((d, i) => (
+            <DiffCard key={i} icon={d.icon} title={d.title} desc={d.desc} />
           ))}
         </div>
 
-        <p style={{
-          fontFamily: "'DM Sans',sans-serif", fontSize: "12px",
-          color: "var(--text-muted)", textAlign: "center", marginTop: "20px",
+        {/* Commitments strip */}
+        <div style={{
+          ...card,
+          padding: "36px 44px",
+          position: "relative",
+          overflow: "hidden",
         }}>
-          {s.logoNote}
-        </p>
+          {/* Subtle gradient accent */}
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0, height: "3px",
+            background: "linear-gradient(90deg, #a78bfa, #7c3aed, #a78bfa)",
+            pointerEvents: "none",
+          }} />
 
-        {/* Divider */}
-        <div style={{ height: "1px", background: "var(--border)", margin: "56px 0" }} />
+          <p style={{
+            fontFamily: "'DM Sans',sans-serif", fontSize: "11px", fontWeight: 700,
+            color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.14em",
+            marginBottom: "22px",
+          }}>
+            {s.commitTitle}
+          </p>
 
-        {/* Testimonials */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
-          {[0, 1, 2].map((i) => (
-            <div key={i} style={{ ...card, padding: "28px 26px" }}>
-              {/* Stars */}
-              <div style={{ display: "flex", gap: "4px", marginBottom: "18px" }}>
-                {[0, 1, 2, 3, 4].map((star) => (
-                  <svg key={star} width="14" height="14" viewBox="0 0 14 14" fill="rgba(167,139,250,0.35)">
-                    <path d="M7 1.5l1.545 3.58 3.955.485-2.91 2.69.8 3.9L7 10.25l-3.39 1.905.8-3.9L1.5 5.565l3.955-.485z"/>
-                  </svg>
-                ))}
-              </div>
-
-              {/* Quote skeleton */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "24px" }}>
-                {[95, 80, 90, 60].map((w, j) => (
-                  <div key={j} style={{
-                    height: "11px", borderRadius: "6px",
-                    background: "var(--bg-tertiary)", width: `${w}%`,
-                  }} />
-                ))}
-              </div>
-
-              {/* Author */}
-              <div style={{
-                display: "flex", alignItems: "center", gap: "12px",
-                paddingTop: "20px", borderTop: "1px solid var(--border)",
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "14px 36px",
+          }}>
+            {s.commits.map((c, i) => (
+              <div key={i} style={{
+                display: "flex", alignItems: "center", gap: "9px",
+                fontFamily: "'DM Sans',sans-serif", fontSize: "14px",
+                color: "var(--text-secondary)", fontWeight: 500,
               }}>
-                {/* Avatar placeholder */}
                 <div style={{
-                  width: "38px", height: "38px", borderRadius: "50%", flexShrink: 0,
-                  background: `rgba(167,139,250,${0.08 + i * 0.05})`,
-                  border: "1.5px solid rgba(167,139,250,0.20)",
-                }} />
-                <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
-                  <div style={{ height: "11px", borderRadius: "5px", background: "var(--bg-tertiary)", width: "110px" }} />
-                  <div style={{ height: "10px", borderRadius: "5px", background: "var(--bg-tertiary)", width: "80px" }} />
+                  color: GREEN_DARK, flexShrink: 0,
+                  width: "20px", height: "20px",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  background: "rgba(167,139,250,0.10)", borderRadius: "50%",
+                }}>
+                  <CheckCircle />
                 </div>
-                {/* Company logo placeholder */}
-                <div style={{
-                  marginLeft: "auto", width: "52px", height: "22px", borderRadius: "6px",
-                  background: "var(--bg-tertiary)",
-                }} />
+                {c}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-
-        <p style={{
-          fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
-          color: "var(--text-muted)", textAlign: "center", marginTop: "32px",
-        }}>
-          {s.trustNote}
-        </p>
       </div>
     </section>
   );

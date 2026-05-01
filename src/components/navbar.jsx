@@ -223,7 +223,6 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800;9..144,700&family=DM+Sans:wght@300;400;500;600&display=swap');
         @keyframes arp-blink  { 0%,100%{opacity:1} 50%{opacity:.35} }
         @keyframes arp-spin   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
         @keyframes arp-fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }

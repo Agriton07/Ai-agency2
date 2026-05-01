@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { GRAD, gradText } from "./utils/SharedUI";
 
 import { AppProvider } from "./context/AppContext";
 import Navbar from "./components/navbar";
@@ -14,6 +15,23 @@ import UseCasesPage  from "./pages/UseCasesPage";
 import FAQPage       from "./pages/FAQPage";
 import AboutPage     from "./pages/AboutPage";
 import ContactPage   from "./pages/ContactPage";
+
+// 404 page
+const NotFoundPage = () => {
+  const navigate = useNavigate();
+  return (
+    <div style={{
+      minHeight: "80vh", display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center", textAlign: "center",
+      padding: "40px 24px", background: "var(--bg-primary)",
+    }}>
+      <p style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(64px,10vw,120px)", ...gradText, lineHeight: 1, marginBottom: "8px" }}>404</p>
+      <h1 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "clamp(22px,3vw,32px)", color: "var(--text-primary)", marginBottom: "14px", letterSpacing: "-0.02em" }}>Page not found</h1>
+      <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "15px", color: "var(--text-secondary)", marginBottom: "32px", maxWidth: "360px", lineHeight: 1.6 }}>The page you're looking for doesn't exist. Let's get you back on track.</p>
+      <button onClick={() => navigate("/")} style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px", color: "#fff", background: GRAD, border: "none", padding: "12px 28px", borderRadius: "12px", cursor: "pointer", boxShadow: "0 4px 20px rgba(167,139,250,0.30)" }}>Go to homepage</button>
+    </div>
+  );
+};
 
 // Floating chat/booking button — always visible
 const FloatingCTA = () => {
@@ -60,6 +78,7 @@ function AnimatedRoutes() {
         <Route path="/faq"        element={<FAQPage />} />
         <Route path="/about"      element={<AboutPage />} />
         <Route path="/contact"    element={<ContactPage />} />
+        <Route path="*"           element={<NotFoundPage />} />
       </Routes>
     </AnimatePresence>
   );

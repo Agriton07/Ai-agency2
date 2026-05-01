@@ -92,6 +92,29 @@ export default function Hero() {
             </button>
           </div>
 
+          {/* Trust indicators */}
+          <div className="arp-fade-4" style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
+            {[h.trust1, h.trust2, h.trust3].filter(Boolean).map((item, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <div style={{
+                  width: "18px", height: "18px", borderRadius: "50%",
+                  background: "rgba(167,139,250,0.12)",
+                  display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                }}>
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 6l2 2 5-4" stroke={GREEN} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span style={{
+                  fontFamily: "'DM Sans',sans-serif", fontSize: "12px",
+                  color: "var(--text-muted)", fontWeight: 500,
+                }}>
+                  {item}
+                </span>
+              </div>
+            ))}
+          </div>
+
           {/* Stats */}
           <div className="arp-fade-5" style={{
             display: "flex", gap: "0", paddingTop: "24px",
