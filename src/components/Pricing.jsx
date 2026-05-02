@@ -28,7 +28,7 @@ export default function Pricing() {
               fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "12px",
               color: "var(--text-muted)", letterSpacing: "0.04em",
             }}>
-              Fixed-price projects · No hidden fees · No monthly subscriptions
+              {p.guarantee}
             </span>
           </div>
         </div>
@@ -157,11 +157,38 @@ export default function Pricing() {
           })}
         </div>
 
+        {/* ROI callout */}
+        {p.roi && (
+          <div style={{
+            margin: "48px auto 0", maxWidth: "680px",
+            background: "var(--bg-secondary)", border: "1px solid var(--border)",
+            borderRadius: "16px", padding: "24px 28px",
+            display: "flex", alignItems: "flex-start", gap: "16px",
+          }}>
+            <div style={{
+              width: "36px", height: "36px", borderRadius: "10px",
+              background: GRAD, flexShrink: 0,
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+            <p style={{
+              fontFamily: "'DM Sans',sans-serif", fontSize: "14px",
+              color: "var(--text-secondary)", lineHeight: 1.65, margin: 0,
+            }}>
+              {p.roi}
+            </p>
+          </div>
+        )}
+
         {/* Bottom note */}
         <p style={{
           fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
           color: "var(--text-muted)", textAlign: "center",
-          maxWidth: "560px", margin: "32px auto 0",
+          maxWidth: "560px", margin: "24px auto 0",
         }}>
           {p.note}
         </p>

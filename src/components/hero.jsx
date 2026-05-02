@@ -217,7 +217,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <style>{`@media(max-width:900px){.hero-right{display:none!important}}`}</style>
     </section>
   );
 }

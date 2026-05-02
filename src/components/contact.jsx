@@ -60,11 +60,11 @@ const ContactForm = ({ ejsReady }) => {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+      <div className="contact-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
         <div><label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>{c.name} <span style={{ color: GREEN }}>*</span></label><input name="from_name" type="text" placeholder={c.namePh} value={fields.from_name} onChange={set("from_name")} required style={inputStyle} onFocus={fi} onBlur={fo}/></div>
         <div><label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>{c.email} <span style={{ color: GREEN }}>*</span></label><input name="from_email" type="email" placeholder={c.emailPh} value={fields.from_email} onChange={set("from_email")} required style={inputStyle} onFocus={fi} onBlur={fo}/></div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+      <div className="contact-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
         <div><label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>{c.company}</label><input name="company" type="text" placeholder={c.companyPh} value={fields.company} onChange={set("company")} style={inputStyle} onFocus={fi} onBlur={fo}/></div>
         <div><label style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)", display: "block", marginBottom: "7px" }}>{c.service}</label>
           <select name="service" value={fields.service} onChange={set("service")} style={{ ...inputStyle, appearance: "none", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M3 5l4 4 4-4' stroke='%2378716c' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 14px center", paddingRight: "36px", cursor: "pointer", color: fields.service ? "var(--text-primary)" : "var(--text-muted)" }} onFocus={fi} onBlur={fo}>
@@ -133,7 +133,7 @@ export default function Contact() {
           ))}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "28px", alignItems: "start" }}>
+        <div className="contact-main-grid" style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "28px", alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px" }}>{c.founders}</p>
             {FOUNDERS.map((f, i) => (
@@ -176,7 +176,7 @@ export default function Contact() {
 
           <div style={{ ...card, overflow: "hidden", boxShadow: "var(--shadow-md)" }}>
             <div style={{ height: "4px", background: GRAD }}/>
-            <div style={{ padding: "36px 40px" }}>
+            <div className="contact-form-inner" style={{ padding: "36px 40px" }}>
               <h3 style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "22px", color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: "6px" }}>{c.formTitle}</h3>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "28px" }}>{c.formDesc}</p>
               <ContactForm ejsReady={ejsReady}/>
@@ -184,7 +184,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <style>{`@media(max-width:900px){.contact-grid{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }

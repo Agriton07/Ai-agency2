@@ -297,6 +297,8 @@ const translations = {
       titleAccent: "transparent pricing",
       subtitle:
         "Fixed-price projects. No hidden fees, no vague estimates. Pick your scope and we'll build it.",
+      guarantee: "Fixed-price contracts · No hidden fees · No monthly subscriptions",
+      roi: "Most businesses cover the full project cost within their first month — through leads they would have missed and hours no longer spent on manual work.",
       note: "All prices are one-time project fees. Monthly retainer & support packages available on request.",
       popularBadge: "Most popular",
       tiers: [
@@ -514,6 +516,14 @@ const translations = {
           { icon: "💬", tag: "Sales & Lead Gen",    title: "Never Miss a Lead",   desc: "A prospect messages at 11pm — your AI responds instantly, qualifies them, and books a call. While you sleep.", outcome: "Avg. 3× more leads captured" },
           { icon: "📞", tag: "Booking & Ops",       title: "Calls on Autopilot",  desc: "Your AI voice agent picks up every call, books appointments, and sends confirmations — 24/7, zero hold music.", outcome: "Zero missed calls" },
           { icon: "⚡", tag: "Workflow Automation", title: "Admin Runs Itself",   desc: "Deal closes → contract sent → Notion updated → Stripe invoice sent → Slack notified. One trigger.", outcome: "Hours of admin eliminated daily" },
+        ],
+      },
+      resultsStrip: {
+        label: "Real outcomes. Measured.",
+        stats: [
+          { val: "3×",    desc: "more leads captured on average" },
+          { val: "60%+",  desc: "reduction in manual admin work" },
+          { val: "<3wk",  desc: "average time to go live" },
         ],
       },
       cta: {
@@ -770,6 +780,8 @@ const translations = {
       title: "Precios",
       titleAccent: "simples y transparentes",
       subtitle: "Proyectos a precio fijo. Sin costes ocultos, sin estimaciones vagas. Elige tu alcance y lo construimos.",
+      guarantee: "Contratos a precio fijo · Sin costes ocultos · Sin suscripciones mensuales",
+      roi: "La mayoría de los negocios recuperan el coste total del proyecto en el primer mes — gracias a los leads que antes perdían y las horas que dejaron de dedicar a trabajo manual.",
       note: "Todos los precios son tarifas de proyecto únicas. Paquetes de mantenimiento mensual disponibles bajo petición.",
       popularBadge: "Más popular",
       tiers: [
@@ -983,6 +995,14 @@ const translations = {
           { icon: "💬", tag: "Ventas y Leads",         title: "Nunca pierdas un lead",              desc: "Un prospecto escribe a las 11 de la noche — tu IA responde al instante, lo cualifica y reserva una llamada. Mientras duermes.", outcome: "3× más leads capturados" },
           { icon: "📞", tag: "Reservas y Operaciones", title: "Llamadas en automático",              desc: "Tu agente de voz atiende cada llamada, reserva citas y envía confirmaciones — 24/7, sin música de espera.", outcome: "Cero llamadas perdidas" },
           { icon: "⚡", tag: "Automatización",         title: "La administración se gestiona sola",  desc: "Cierre de deal → contrato enviado → Notion actualizado → factura en Stripe → Slack notificado. Un solo disparador.", outcome: "Horas de administración eliminadas al día" },
+        ],
+      },
+      resultsStrip: {
+        label: "Resultados reales. Medidos.",
+        stats: [
+          { val: "3×",    desc: "más leads capturados de media" },
+          { val: "60%+",  desc: "reducción en trabajo administrativo manual" },
+          { val: "<3sem", desc: "tiempo medio hasta salir en producción" },
         ],
       },
       cta: {
@@ -1239,6 +1259,8 @@ const translations = {
       title: "Eenvoudige,",
       titleAccent: "transparante prijzen",
       subtitle: "Projecten tegen vaste prijs. Geen verborgen kosten, geen vage schattingen. Kies uw scope en wij bouwen het.",
+      guarantee: "Vaste-prijscontracten · Geen verborgen kosten · Geen maandabonnementen",
+      roi: "De meeste bedrijven verdienen de volledige projectkosten terug in de eerste maand — via leads die ze anders hadden gemist en uren die niet langer aan handmatig werk besteed worden.",
       note: "Alle prijzen zijn eenmalige projectkosten. Maandelijkse onderhouds- en supportpakketten beschikbaar op aanvraag.",
       popularBadge: "Meest populair",
       tiers: [
@@ -1454,6 +1476,14 @@ const translations = {
           { icon: "⚡", tag: "Werkstroomautomatisering",   title: "Administratie die zichzelf regelt", desc: "Deal gesloten → contract verstuurd → Notion bijgewerkt → Stripe-factuur verstuurd → Slack gemeld. Eén trigger.", outcome: "Dagelijks uren aan administratie bespaard" },
         ],
       },
+      resultsStrip: {
+        label: "Echte resultaten. Gemeten.",
+        stats: [
+          { val: "3×",    desc: "meer leads vastgelegd gemiddeld" },
+          { val: "60%+",  desc: "minder handmatig administratief werk" },
+          { val: "<3wk",  desc: "gemiddelde tijd tot live-gang" },
+        ],
+      },
       cta: {
         eyebrow: "Klaar om te automatiseren?",
         title: "Boek een gratis",
@@ -1473,11 +1503,15 @@ export function AppProvider({ children }) {
     try { return localStorage.getItem("arp-theme") || "light"; } catch { return "light"; }
   });
 
-  const toggleTheme = () => setTheme((t) => {
-    const next = t === "light" ? "dark" : "light";
-    try { localStorage.setItem("arp-theme", next); } catch {}
-    return next;
-  });
+  const toggleTheme = () => {
+    document.documentElement.classList.add("theme-transitioning");
+    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 300);
+    setTheme((t) => {
+      const next = t === "light" ? "dark" : "light";
+      try { localStorage.setItem("arp-theme", next); } catch {}
+      return next;
+    });
+  };
 
   const [lang, setLang] = useState(() => {
     try { return localStorage.getItem("arp-lang") || "en"; } catch { return "en"; }

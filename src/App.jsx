@@ -33,9 +33,11 @@ const NotFoundPage = () => {
   );
 };
 
-// Floating chat/booking button — always visible
+// Floating chat/booking button — hidden on /contact
 const FloatingCTA = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  if (location.pathname === "/contact") return null;
   return (
     <button
       onClick={() => navigate("/contact")}

@@ -15,15 +15,59 @@ import {
   VP, D, E,
 } from "../utils/motion";
 
+// SVG icons for service tiles
+const TileIcons = {
+  chat: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  ),
+  phone: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.61 5 2 2 0 0 1 3.59 2.82h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.36a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+  ),
+  lightning: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  ),
+  chart: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+    </svg>
+  ),
+  calendar: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  ),
+  share: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+    </svg>
+  ),
+  cpu: (c) => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+      <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+      <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+      <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/>
+      <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+    </svg>
+  ),
+};
+
 // Icons & spans are structural (not translatable)
 const TILE_META = [
-  { icon: "💬", span: 2 },
-  { icon: "📞", span: 1 },
-  { icon: "⚡", span: 1 },
-  { icon: "📊", span: 2 },
-  { icon: "📅", span: 2 },
-  { icon: "🔗", span: 2 },
-  { icon: "🤖", span: 2 },
+  { icon: TileIcons.chat,      span: 2 },
+  { icon: TileIcons.phone,     span: 1 },
+  { icon: TileIcons.lightning, span: 1 },
+  { icon: TileIcons.chart,     span: 2 },
+  { icon: TileIcons.calendar,  span: 2 },
+  { icon: TileIcons.share,     span: 2 },
+  { icon: TileIcons.cpu,       span: 2 },
 ];
 
 const AVATARS = [
@@ -124,10 +168,10 @@ function ServiceTile({ tile, meta, learnMore }) {
           width: "44px", height: "44px", borderRadius: "12px",
           background: hovered ? GRAD : "rgba(167,139,250,0.10)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "20px", marginBottom: "14px",
+          marginBottom: "14px",
           transition: "background 0.25s",
         }}>
-          {meta.icon}
+          {meta.icon(hovered ? "#fff" : "rgba(167,139,250,0.85)")}
         </div>
         <p style={{
           fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "15px",
@@ -621,6 +665,70 @@ function UseCasesTeaser() {
   );
 }
 
+// ─── Results Strip ────────────────────────────────────────────────────────────
+function ResultsStrip() {
+  const { t } = useApp();
+  const r = t.home.resultsStrip;
+  const { ref, inView } = useReveal();
+
+  return (
+    <section style={{ background: "#0f0e0d", padding: "72px 0" }}>
+      <Container>
+        <p style={{
+          fontFamily: "'DM Sans',sans-serif", fontSize: "12px",
+          fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+          color: "rgba(167,139,250,0.7)", textAlign: "center", marginBottom: "40px",
+        }}>
+          {r.label}
+        </p>
+        <motion.div
+          ref={ref}
+          variants={STAGGER}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1px",
+            background: "rgba(255,255,255,0.06)",
+            borderRadius: "16px",
+            overflow: "hidden",
+          }}
+          className="results-strip-grid"
+        >
+          {r.stats.map((s, i) => (
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              style={{
+                background: "#0f0e0d",
+                padding: "40px 32px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{
+                fontFamily: "'Fraunces',serif", fontWeight: 800,
+                fontSize: "clamp(36px,5vw,56px)", lineHeight: 1,
+                background: "linear-gradient(135deg,#a78bfa,#7c3aed)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                marginBottom: "12px",
+              }}>
+                {s.val}
+              </div>
+              <p style={{
+                fontFamily: "'DM Sans',sans-serif", fontSize: "14px",
+                color: "rgba(255,255,255,0.5)", lineHeight: 1.5, margin: 0,
+              }}>
+                {s.desc}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </Container>
+    </section>
+  );
+}
+
 // ─── Final CTA Banner ─────────────────────────────────────────────────────────
 function HomeCTA() {
   const { t } = useApp();
@@ -742,6 +850,7 @@ export default function HomePage() {
       <ProcessSection />
       <PricingTeaser />
       <UseCasesTeaser />
+      <ResultsStrip />
       <SocialProof />
       <HomeCTA />
     </PageTransition>

@@ -11,6 +11,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* Smooth theme switching — apply to all elements that use bg/color tokens */
+.theme-transitioning, .theme-transitioning * {
+  transition: background 0.25s ease, background-color 0.25s ease,
+              border-color 0.25s ease, color 0.25s ease,
+              box-shadow 0.25s ease !important;
 }
 img, svg, video { max-width: 100%; display: block; }
 
@@ -184,6 +192,11 @@ p { line-height: var(--leading-relaxed); color: var(--text-secondary); }
 /* ── Metric strip ─────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .metric-strip { grid-template-columns: 1fr 1fr !important; gap: 28px 16px !important; }
+}
+
+/* ── Results strip ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .results-strip-grid { grid-template-columns: 1fr !important; }
 }
 
 /* ── HowItWorks sidebar grid ──────────────────────────────────── */
