@@ -1,11 +1,33 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
 import { GREEN, GRAD, card, tag, gradText, CheckIcon, ArrowIcon, GREEN_DARK } from "../utils/SharedUI";
+
+const NOTIFS = [
+  { icon: "🎯", title: "Lead qualified",       sub: "Sarah M. → Discovery call booked" },
+  { icon: "📅", title: "Appointment confirmed", sub: "Dr. Patel · Tomorrow 2:00 PM" },
+  { icon: "⚡", title: "Admin automated",       sub: "8 invoices processed · 0 effort" },
+];
 
 export default function Hero() {
   const navigate = useNavigate();
   const { t } = useApp();
   const h = t.hero;
+  const [notifIdx, setNotifIdx] = useState(0);
+  const [notifVisible, setNotifVisible] = useState(true);
+
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      setNotifVisible(false);
+      setTimeout(() => {
+        setNotifIdx(i => (i + 1) % NOTIFS.length);
+        setNotifVisible(true);
+      }, 400);
+    }, 3200);
+    return () => clearInterval(cycle);
+  }, []);
+
+  const notif = NOTIFS[notifIdx];
 
   return (
     <section style={{
@@ -13,14 +35,18 @@ export default function Hero() {
       display: "flex", alignItems: "center",
       position: "relative", overflow: "hidden", padding: "40px 0 80px",
     }}>
-      {/* Background glows */}
-      <div style={{ position: "absolute", top: "-10%", right: "-5%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 65%)", pointerEvents: "none" }}/>
-      <div style={{ position: "absolute", bottom: "-10%", left: "-5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(30,168,122,0.05) 0%, transparent 65%)", pointerEvents: "none" }}/>
+      {/* Dot grid texture */}
+      <div className="dot-grid" style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.6 }} />
+
+      {/* Gradient orbs */}
+      <div style={{ position: "absolute", top: "-12%", right: "-6%", width: "700px", height: "700px", borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.10) 0%, transparent 62%)", pointerEvents: "none" }}/>
+      <div style={{ position: "absolute", bottom: "-12%", left: "-6%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 62%)", pointerEvents: "none" }}/>
+      <div style={{ position: "absolute", top: "35%", left: "25%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 60%)", pointerEvents: "none" }}/>
 
       <div style={{
         maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%",
         display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-        gap: "60px", alignItems: "center",
+        gap: "60px", alignItems: "center", position: "relative",
       }}>
         {/* Left: copy */}
         <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
@@ -33,11 +59,11 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* Headline — fixed: line1 + line2 + accent on same line */}
+          {/* Headline — bigger, tighter */}
           <h1 className="arp-fade-2" style={{
             fontFamily: "'Fraunces',Georgia,serif", fontWeight: 800,
-            fontSize: "clamp(44px,5.5vw,76px)", lineHeight: 1.03,
-            letterSpacing: "-0.03em", color: "var(--text-primary)",
+            fontSize: "clamp(48px, 6.2vw, 86px)", lineHeight: 0.98,
+            letterSpacing: "-0.038em", color: "var(--text-primary)",
           }}>
             {h.line1}<br/>
             {h.line2}{" "}<span style={gradText}>{h.line2accent}</span>
@@ -45,7 +71,7 @@ export default function Hero() {
 
           {/* Description */}
           <p className="arp-fade-3" style={{
-            fontFamily: "'DM Sans',sans-serif", fontSize: "17px",
+            fontFamily: "'DM Sans',sans-serif", fontSize: "18px",
             color: "var(--text-secondary)", lineHeight: 1.65, maxWidth: "460px",
           }}>
             {h.description}
@@ -53,31 +79,29 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="arp-fade-4" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-            {/* Primary CTA → contact */}
             <button
               onClick={() => navigate("/contact")}
               style={{
                 fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px",
                 color: "#fff", background: GRAD, border: "none",
-                padding: "13px 26px", borderRadius: "13px", cursor: "pointer",
+                padding: "14px 28px", borderRadius: "14px", cursor: "pointer",
                 display: "inline-flex", alignItems: "center", gap: "8px",
-                boxShadow: "0 4px 20px rgba(167,139,250,0.30)",
+                boxShadow: "0 4px 24px rgba(167,139,250,0.35)",
                 transition: "transform 0.2s, box-shadow 0.2s",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.04)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(167,139,250,0.50)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(167,139,250,0.35)"; }}
             >
               {h.cta1}<ArrowIcon white/>
             </button>
 
-            {/* Secondary CTA → how it works */}
             <button
               onClick={() => navigate("/services")}
               style={{
                 fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "15px",
                 color: "var(--text-primary)", background: "transparent",
-                border: "1.5px solid var(--border)", padding: "13px 26px",
-                borderRadius: "13px", cursor: "pointer",
+                border: "1.5px solid var(--border)", padding: "14px 28px",
+                borderRadius: "14px", cursor: "pointer",
                 display: "inline-flex", alignItems: "center", gap: "8px",
                 transition: "border-color 0.2s, color 0.2s",
               }}
@@ -105,12 +129,7 @@ export default function Hero() {
                     <path d="M2.5 6l2 2 5-4" stroke={GREEN} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span style={{
-                  fontFamily: "'DM Sans',sans-serif", fontSize: "12px",
-                  color: "var(--text-muted)", fontWeight: 500,
-                }}>
-                  {item}
-                </span>
+                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-muted)", fontWeight: 500 }}>{item}</span>
               </div>
             ))}
           </div>
@@ -131,15 +150,12 @@ export default function Hero() {
                 marginLeft: i > 0 ? "28px" : "0",
               }}>
                 <div style={{
-                  fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "26px",
+                  fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "28px",
                   ...gradText, lineHeight: 1.1, marginBottom: "4px",
                 }}>
                   {s.val}
                 </div>
-                <div style={{
-                  fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
-                  color: "var(--text-muted)",
-                }}>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "var(--text-muted)" }}>
                   {s.lbl}
                 </div>
               </div>
@@ -153,10 +169,15 @@ export default function Hero() {
         }}>
           <div style={{ width: "100%", maxWidth: "380px", position: "relative" }}>
             <div
-              style={{ ...card, padding: "24px", boxShadow: "var(--shadow-lg)", transition: "transform 0.3s, box-shadow 0.3s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 32px 80px rgba(0,0,0,0.15)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "var(--shadow-lg)"; }}
+              style={{
+                ...card, padding: "24px",
+                boxShadow: "var(--shadow-lg), 0 0 0 1px rgba(167,139,250,0.08)",
+                transition: "transform 0.3s, box-shadow 0.3s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 32px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(167,139,250,0.18)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "var(--shadow-lg), 0 0 0 1px rgba(167,139,250,0.08)"; }}
             >
+              {/* Header row */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                   <div style={{ position: "relative", width: "10px", height: "10px" }}>
@@ -168,27 +189,32 @@ export default function Hero() {
                 <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600, color: GREEN_DARK, background: "rgba(167,139,250,0.12)", padding: "3px 10px", borderRadius: "99px" }}>{h.dashLive}</span>
               </div>
 
+              {/* Animated bar chart */}
               <div style={{ marginBottom: "20px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
                   <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-muted)" }}>{h.dashChart}</span>
                   <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 700, ...gradText }}>+24.8%</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "flex-end", gap: "5px", height: "56px" }}>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: "5px", height: "60px" }}>
                   {[40, 65, 50, 85, 70, 95, 80].map((v, i) => (
                     <div key={i} style={{
                       flex: 1, height: `${v}%`, borderRadius: "4px 4px 2px 2px",
-                      background: i === 5 ? GRAD : `rgba(167,139,250,${0.2 + i * 0.1})`,
+                      background: i === 5 ? GRAD : `rgba(167,139,250,${0.18 + i * 0.1})`,
+                      transformOrigin: "bottom",
+                      animation: `bar-grow 0.7s cubic-bezier(0.22,1,0.36,1) ${0.1 + i * 0.08}s both`,
                     }}/>
                   ))}
                 </div>
               </div>
 
               <div style={{ borderTop: "1px solid var(--border)", marginBottom: "16px" }}/>
+
+              {/* Metrics */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
                 {[
                   { val: "40h/mo", lbl: h.dashSaved },
-                  { val: "99.2%", lbl: h.dashAcc },
-                  { val: "99.9%", lbl: h.dashUp },
+                  { val: "99.2%",  lbl: h.dashAcc },
+                  { val: "99.9%",  lbl: h.dashUp },
                 ].map((m) => (
                   <div key={m.lbl} style={{ textAlign: "center" }}>
                     <div style={{ fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "15px", ...gradText }}>{m.val}</div>
@@ -198,25 +224,31 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Floating notification */}
+            {/* Cycling notification */}
             <div style={{
-              position: "absolute", bottom: "-16px", left: "-16px",
+              position: "absolute", bottom: "-16px", left: "-20px",
               ...card, padding: "12px 14px",
               display: "flex", alignItems: "flex-start", gap: "10px",
-              boxShadow: "var(--shadow-md)", minWidth: "220px",
+              boxShadow: "var(--shadow-md)", minWidth: "240px",
+              transition: "opacity 0.35s ease, transform 0.35s ease",
+              opacity: notifVisible ? 1 : 0,
+              transform: notifVisible ? "translateY(0)" : "translateY(6px)",
             }}>
-              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <CheckIcon size={11}/>
+              <div style={{
+                width: "30px", height: "30px", borderRadius: "50%", background: GRAD,
+                display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
+                fontSize: "13px",
+              }}>
+                {notif.icon}
               </div>
               <div>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: "var(--text-primary)", marginBottom: "2px" }}>{h.notifTitle}</div>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", color: "var(--text-muted)" }}>{h.notifSub}</div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: "var(--text-primary)", marginBottom: "2px" }}>{notif.title}</div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", color: "var(--text-muted)" }}>{notif.sub}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </section>
   );
 }

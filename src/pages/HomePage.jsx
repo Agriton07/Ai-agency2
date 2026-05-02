@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useApp } from "../context/useApp";
@@ -71,9 +71,33 @@ const TILE_META = [
 ];
 
 const AVATARS = [
-  { initials: "JK", bg: "#7c3aed" },
-  { initials: "AJ", bg: "#a78bfa" },
-  { initials: "AA", bg: "#9333ea" },
+  { initials: "AÁ", bg: "#7c3aed" },
+  { initials: "JK", bg: "#a78bfa" },
+  { initials: "AK", bg: "#9333ea" },
+];
+
+const MARQUEE_CAPS = [
+  "AI Chatbots", "Lead Qualification", "Voice Agents", "CRM Integration",
+  "Email Automation", "Appointment Booking", "Invoice Processing",
+  "24/7 Support", "WhatsApp Bots", "Custom AI Agents", "Workflow Automation",
+  "Sales Pipelines",
+];
+
+const DEMO_MESSAGES = [
+  { from: "customer", text: "Hi! I saw your ad — can I still book a table for tonight?" },
+  { from: "ai",       text: "Hi there! Yes, we have availability. How many guests and what time works for you?", delay: 1400 },
+  { from: "customer", text: "Party of 4, around 8pm please", delay: 2800 },
+  { from: "ai",       text: "Perfect! I've reserved a table for 4 at 8:00 PM tonight ✓ Name for the booking?", delay: 4200 },
+  { from: "customer", text: "Marco Rossi", delay: 5600 },
+  { from: "ai",       text: "Done! Booking confirmed for Marco Rossi — 4 guests, 8:00 PM. You'll receive a confirmation shortly 🎉", delay: 6800 },
+];
+
+const DEMO_EVENTS = [
+  { icon: "🟢", label: "Message received",   time: "00:01", active: 1 },
+  { icon: "🧠", label: "Intent classified",  time: "00:01", active: 2 },
+  { icon: "📅", label: "Booking confirmed",  time: "00:03", active: 4 },
+  { icon: "📧", label: "Confirmation sent",  time: "00:07", active: 5 },
+  { icon: "📊", label: "CRM updated",        time: "00:07", active: 6 },
 ];
 
 function useReveal(vp = VP) {
@@ -82,7 +106,78 @@ function useReveal(vp = VP) {
   return { ref, inView };
 }
 
+function useCountUp(target, duration = 1600, inView = false) {
+  const [count, setCount] = useState(0);
+  const started = useRef(false);
+  useEffect(() => {
+    if (!inView || started.current) return;
+    started.current = true;
+    const start = performance.now();
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(ease * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView, target, duration]);
+  return count;
+}
+
+// ─── Marquee Strip ────────────────────────────────────────────────────────────
+function MarqueeStrip() {
+  const doubled = [...MARQUEE_CAPS, ...MARQUEE_CAPS];
+  return (
+    <div style={{
+      overflow: "hidden",
+      background: "var(--bg-primary)",
+      borderTop: "1px solid var(--border)",
+      borderBottom: "1px solid var(--border)",
+      padding: "14px 0",
+      position: "relative",
+    }}>
+      {/* Fade edges */}
+      <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "80px", background: "linear-gradient(90deg, var(--bg-primary), transparent)", zIndex: 1, pointerEvents: "none" }}/>
+      <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "80px", background: "linear-gradient(-90deg, var(--bg-primary), transparent)", zIndex: 1, pointerEvents: "none" }}/>
+
+      <div
+        className="marquee-inner"
+        style={{
+          display: "flex", gap: "0",
+          animation: "marquee 28s linear infinite",
+          width: "max-content",
+        }}
+      >
+        {doubled.map((cap, i) => (
+          <span key={i} style={{
+            display: "inline-flex", alignItems: "center", gap: "0",
+            fontFamily: "'DM Sans',sans-serif", fontWeight: 500, fontSize: "13px",
+            color: "var(--text-muted)", whiteSpace: "nowrap",
+            padding: "0 24px",
+          }}>
+            {cap}
+            <span style={{ marginLeft: "24px", color: "rgba(167,139,250,0.5)", fontWeight: 300 }}>·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Metric Strip ─────────────────────────────────────────────────────────────
+const METRIC_NUMS = [3, 60, 24, 100];
+
+function MetricCounter({ target, suffix = "", prefix = "" }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const count = useCountUp(target, 1800, inView);
+  return (
+    <span ref={ref} style={{ display: "inline" }}>
+      {prefix}{count}{suffix}
+    </span>
+  );
+}
+
 function MetricStrip() {
   const { t } = useApp();
   const metrics = t.home.metrics;
@@ -90,10 +185,9 @@ function MetricStrip() {
 
   return (
     <div style={{
-      borderTop: "1px solid var(--border)",
       borderBottom: "1px solid var(--border)",
       background: "var(--bg-secondary)",
-      padding: "40px 0",
+      padding: "48px 0",
     }}>
       <Container>
         <motion.div
@@ -116,14 +210,17 @@ function MetricStrip() {
             >
               <div style={{
                 fontFamily: "'Fraunces',serif", fontWeight: 800,
-                fontSize: "clamp(22px, 2.8vw, 36px)", lineHeight: 1.05,
-                marginBottom: "6px", ...gradText,
+                fontSize: "clamp(26px, 3vw, 40px)", lineHeight: 1.0,
+                marginBottom: "8px", ...gradText,
               }}>
-                {m.value}
+                {i === 0 ? <><MetricCounter target={1} prefix="" suffix="–3 wks" /></> :
+                 i === 1 ? <><MetricCounter target={60} suffix="%+" /></> :
+                 i === 2 ? <>24/7</> :
+                           <><MetricCounter target={100} suffix="+" /></>}
               </div>
               <div style={{
                 fontFamily: "'DM Sans',sans-serif", fontSize: "13px",
-                color: "var(--text-muted)", lineHeight: 1.4,
+                color: "var(--text-muted)", lineHeight: 1.45,
               }}>
                 {m.label}
               </div>
@@ -243,6 +340,304 @@ function ServicesGrid() {
               {s.cta} <ArrowIcon/>
             </motion.button>
           </motion.div>
+        </motion.div>
+      </Container>
+    </section>
+  );
+}
+
+// ─── Live Demo Section (Signature Element) ───────────────────────────────────
+function TypingIndicator() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "10px 14px" }}>
+      {[0, 1, 2].map(i => (
+        <div key={i} style={{
+          width: "6px", height: "6px", borderRadius: "50%",
+          background: "rgba(167,139,250,0.6)",
+          animation: `typing-dot 1.2s ${i * 0.2}s ease-in-out infinite`,
+        }}/>
+      ))}
+    </div>
+  );
+}
+
+function ChatBubble({ msg, visible }) {
+  const isAI = msg.from === "ai";
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={visible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.95 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        display: "flex",
+        justifyContent: isAI ? "flex-start" : "flex-end",
+        marginBottom: "10px",
+      }}
+    >
+      {isAI && (
+        <div style={{
+          width: "28px", height: "28px", borderRadius: "50%", background: GRAD,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0, marginRight: "8px", marginTop: "2px", fontSize: "12px",
+        }}>
+          🤖
+        </div>
+      )}
+      <div style={{
+        maxWidth: "75%",
+        padding: "10px 14px",
+        borderRadius: isAI ? "4px 16px 16px 16px" : "16px 4px 16px 16px",
+        background: isAI ? "var(--bg-tertiary)" : GRAD,
+        color: isAI ? "var(--text-primary)" : "#fff",
+        fontFamily: "'DM Sans',sans-serif", fontSize: "13px", lineHeight: 1.55,
+        border: isAI ? "1px solid var(--border)" : "none",
+        boxShadow: isAI ? "none" : "0 4px 16px rgba(124,58,237,0.25)",
+      }}>
+        {msg.text}
+      </div>
+    </motion.div>
+  );
+}
+
+function LiveDemoSection() {
+  const { t } = useApp();
+  const navigate = useNavigate();
+  const { ref, inView } = useReveal();
+  const [step, setStep] = useState(-1);
+  const [showTyping, setShowTyping] = useState(false);
+  const [activeEvents, setActiveEvents] = useState([]);
+  const resetRef = useRef(null);
+
+  useEffect(() => {
+    if (!inView) return;
+
+    const schedule = (fn, ms) => setTimeout(fn, ms);
+    const timers = [];
+
+    const run = () => {
+      setStep(-1);
+      setShowTyping(false);
+      setActiveEvents([]);
+
+      timers.push(schedule(() => setStep(0), 600));
+
+      DEMO_MESSAGES.forEach((msg, i) => {
+        const delay = msg.delay || 0;
+        if (msg.from === "ai") {
+          timers.push(schedule(() => setShowTyping(true), delay - 800));
+          timers.push(schedule(() => { setShowTyping(false); setStep(i); }, delay));
+        } else {
+          timers.push(schedule(() => setStep(i), delay));
+        }
+
+        const eventsToShow = DEMO_EVENTS.filter(e => e.active <= i + 1);
+        timers.push(schedule(() => setActiveEvents(eventsToShow.map(e => e.label)), delay + 200));
+      });
+
+      resetRef.current = schedule(run, 14000);
+    };
+
+    run();
+    return () => { timers.forEach(clearTimeout); clearTimeout(resetRef.current); };
+  }, [inView]);
+
+  return (
+    <section style={{ background: "var(--bg-primary)", padding: "100px 0 110px", position: "relative", overflow: "hidden" }}>
+      <div className="dot-grid" style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.5 }} />
+      <div style={{ position: "absolute", top: "20%", right: "-5%", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle,rgba(167,139,250,0.07) 0%,transparent 65%)", pointerEvents: "none" }}/>
+
+      <Container>
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "64px" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "12px",
+              textTransform: "uppercase", letterSpacing: "0.1em",
+              color: GREEN, background: "rgba(167,139,250,0.10)", border: "1px solid rgba(167,139,250,0.25)",
+              padding: "5px 14px", borderRadius: "99px",
+            }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: GREEN, animation: "arp-blink 2s ease infinite" }}/>
+              Watch it work
+            </span>
+          </div>
+          <h2 style={{
+            fontFamily: "'Fraunces',Georgia,serif", fontWeight: 800,
+            fontSize: "clamp(30px, 3.5vw, 52px)", lineHeight: 1.05,
+            letterSpacing: "-0.025em", color: "var(--text-primary)",
+            marginBottom: "16px",
+          }}>
+            Your AI responds while{" "}
+            <span style={gradText}>you sleep.</span>
+          </h2>
+          <p style={{
+            fontFamily: "'DM Sans',sans-serif", fontSize: "17px",
+            color: "var(--text-secondary)", lineHeight: 1.65,
+            maxWidth: "520px", margin: "0 auto",
+          }}>
+            A customer messages at 11pm. Your AI qualifies, responds, and books — in seconds. No human needed.
+          </p>
+        </div>
+
+        {/* Demo grid */}
+        <motion.div
+          ref={ref}
+          variants={fadeUp}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="live-demo-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", alignItems: "start" }}
+        >
+          {/* Chat window */}
+          <div style={{
+            ...card,
+            overflow: "hidden",
+            boxShadow: "var(--shadow-lg), 0 0 0 1px rgba(167,139,250,0.08)",
+          }}>
+            {/* Window chrome */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: "8px",
+              padding: "14px 16px", borderBottom: "1px solid var(--border)",
+              background: "var(--bg-tertiary)",
+            }}>
+              <div style={{ display: "flex", gap: "6px" }}>
+                {["#ff5f57","#ffbd2e","#28c840"].map((c, i) => (
+                  <div key={i} style={{ width: "10px", height: "10px", borderRadius: "50%", background: c }} />
+                ))}
+              </div>
+              <div style={{ flex: 1, textAlign: "center" }}>
+                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "12px", color: "var(--text-muted)", fontWeight: 500 }}>
+                  Your Business AI — WhatsApp
+                </span>
+              </div>
+              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 0 2px rgba(34,197,94,0.2)" }}/>
+            </div>
+
+            {/* Chat messages */}
+            <div style={{ padding: "20px 16px", minHeight: "320px" }}>
+              <AnimatePresence>
+                {DEMO_MESSAGES.slice(0, step + 1).map((msg, i) => (
+                  <ChatBubble key={i} msg={msg} visible />
+                ))}
+                {showTyping && (
+                  <motion.div
+                    key="typing"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}
+                  >
+                    <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: "12px" }}>🤖</div>
+                    <div style={{ ...card, padding: "0", background: "var(--bg-tertiary)", border: "1px solid var(--border)" }}>
+                      <TypingIndicator />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Input bar */}
+            <div style={{
+              padding: "12px 16px", borderTop: "1px solid var(--border)",
+              display: "flex", gap: "10px", alignItems: "center",
+              background: "var(--bg-tertiary)",
+            }}>
+              <div style={{
+                flex: 1, padding: "9px 14px", borderRadius: "99px",
+                background: "var(--bg-input)", border: "1px solid var(--border)",
+                fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "var(--text-muted)",
+              }}>
+                AI is handling this conversation...
+              </div>
+              <div style={{ width: "34px", height: "34px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Event feed */}
+          <div className="live-demo-events" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <p style={{
+              fontFamily: "'DM Sans',sans-serif", fontWeight: 700, fontSize: "11px",
+              color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em",
+              marginBottom: "4px",
+            }}>
+              Automated actions
+            </p>
+            {DEMO_EVENTS.map((ev, i) => {
+              const active = activeEvents.includes(ev.label);
+              return (
+                <motion.div
+                  key={i}
+                  animate={active ? { opacity: 1, x: 0 } : { opacity: 0.28, x: 0 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    ...card,
+                    padding: "14px 16px",
+                    display: "flex", alignItems: "center", gap: "12px",
+                    borderColor: active ? "rgba(167,139,250,0.30)" : "var(--border)",
+                    boxShadow: active ? "var(--shadow-sm), 0 0 0 1px rgba(167,139,250,0.10)" : "none",
+                    transition: "border-color 0.3s, box-shadow 0.3s",
+                  }}
+                >
+                  <div style={{
+                    width: "36px", height: "36px", borderRadius: "10px", flexShrink: 0,
+                    background: active ? GRAD : "var(--bg-tertiary)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "15px", transition: "background 0.3s",
+                  }}>
+                    {ev.icon}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "13px", color: "var(--text-primary)", marginBottom: "2px" }}>
+                      {ev.label}
+                    </p>
+                    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "11px", color: "var(--text-muted)" }}>
+                      {active ? `completed in ${ev.time}` : "waiting..."}
+                    </p>
+                  </div>
+                  {active && (
+                    <div style={{ width: "18px", height: "18px", borderRadius: "50%", background: GRAD, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+
+            {/* Bottom stat */}
+            <div style={{
+              marginTop: "8px", padding: "18px 20px", borderRadius: "16px",
+              background: "rgba(167,139,250,0.06)", border: "1px solid rgba(167,139,250,0.16)",
+              display: "flex", alignItems: "center", gap: "12px",
+            }}>
+              <span style={{ fontSize: "22px" }}>⚡</span>
+              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "var(--text-secondary)", lineHeight: 1.5, margin: 0 }}>
+                <strong style={{ color: "var(--text-primary)" }}>All of this happened in under 8 seconds</strong> — automatically, while you were unavailable.
+              </p>
+            </div>
+
+            <button
+              onClick={() => navigate("/contact")}
+              style={{
+                fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
+                color: "#fff", background: GRAD, border: "none",
+                padding: "13px 24px", borderRadius: "12px", cursor: "pointer",
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                boxShadow: "0 4px 20px rgba(167,139,250,0.30)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+                alignSelf: "flex-start",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.04)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.45)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
+            >
+              Build this for my business <ArrowIcon white />
+            </button>
+          </div>
         </motion.div>
       </Container>
     </section>
@@ -666,21 +1061,44 @@ function UseCasesTeaser() {
 }
 
 // ─── Results Strip ────────────────────────────────────────────────────────────
+function ResultsCounter({ val }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const num = parseInt(val.replace(/\D/g, ""), 10);
+  const suffix = val.replace(/[\d]/g, "").replace("&lt;", "").trim();
+  const prefix = val.includes("<") || val.includes("wk") || val.includes("sem") ? "<" : "";
+  const count = useCountUp(num || 0, 1600, inView);
+  return (
+    <span ref={ref}>
+      {prefix}{num ? count : "—"}{suffix}
+    </span>
+  );
+}
+
 function ResultsStrip() {
   const { t } = useApp();
   const r = t.home.resultsStrip;
   const { ref, inView } = useReveal();
 
   return (
-    <section style={{ background: "#0f0e0d", padding: "72px 0" }}>
-      <Container>
-        <p style={{
-          fontFamily: "'DM Sans',sans-serif", fontSize: "12px",
-          fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
-          color: "rgba(167,139,250,0.7)", textAlign: "center", marginBottom: "40px",
-        }}>
-          {r.label}
-        </p>
+    <section style={{ background: "#0a0a0b", padding: "88px 0", position: "relative", overflow: "hidden" }}>
+      {/* Dark line grid */}
+      <div className="line-grid" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />
+      {/* Orb */}
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.12) 0%,transparent 65%)", pointerEvents: "none" }}/>
+
+      <Container style={{ position: "relative" }}>
+        <div style={{ textAlign: "center", marginBottom: "52px" }}>
+          <span style={{
+            display: "inline-block",
+            fontFamily: "'DM Sans',sans-serif", fontSize: "11px",
+            fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+            color: "rgba(167,139,250,0.65)", marginBottom: "16px",
+          }}>
+            {r.label}
+          </span>
+        </div>
+
         <motion.div
           ref={ref}
           variants={STAGGER}
@@ -689,10 +1107,6 @@ function ResultsStrip() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1px",
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: "16px",
-            overflow: "hidden",
           }}
           className="results-strip-grid"
         >
@@ -701,23 +1115,24 @@ function ResultsStrip() {
               key={i}
               variants={fadeUp}
               style={{
-                background: "#0f0e0d",
-                padding: "40px 32px",
                 textAlign: "center",
+                padding: "40px 32px",
+                borderRight: i < r.stats.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
               }}
             >
               <div style={{
                 fontFamily: "'Fraunces',serif", fontWeight: 800,
-                fontSize: "clamp(36px,5vw,56px)", lineHeight: 1,
-                background: "linear-gradient(135deg,#a78bfa,#7c3aed)",
+                fontSize: "clamp(44px, 6vw, 72px)", lineHeight: 0.95,
+                background: "linear-gradient(135deg,#c4b5fd,#a78bfa,#7c3aed)",
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                marginBottom: "12px",
+                marginBottom: "16px", letterSpacing: "-0.03em",
               }}>
-                {s.val}
+                <ResultsCounter val={s.val} />
               </div>
               <p style={{
-                fontFamily: "'DM Sans',sans-serif", fontSize: "14px",
-                color: "rgba(255,255,255,0.5)", lineHeight: 1.5, margin: 0,
+                fontFamily: "'DM Sans',sans-serif", fontSize: "15px",
+                color: "rgba(255,255,255,0.45)", lineHeight: 1.55, margin: 0,
+                maxWidth: "200px", marginLeft: "auto", marginRight: "auto",
               }}>
                 {s.desc}
               </p>
@@ -845,8 +1260,10 @@ export default function HomePage() {
   return (
     <PageTransition>
       <Hero />
+      <MarqueeStrip />
       <MetricStrip />
       <ServicesGrid />
+      <LiveDemoSection />
       <ProcessSection />
       <PricingTeaser />
       <UseCasesTeaser />

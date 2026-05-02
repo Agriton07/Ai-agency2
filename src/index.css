@@ -206,14 +206,43 @@ p { line-height: var(--leading-relaxed); color: var(--text-secondary); }
 }
 
 /* ══ Shared animation keyframes (referenced by components) ═══ */
-@keyframes arp-fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-@keyframes arp-blink  { 0%,100%{opacity:1} 50%{opacity:.35} }
-@keyframes arp-spin   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-@keyframes arp-ping   { 75%,100%{transform:scale(2);opacity:0} }
-@keyframes fpulse     { 0%,100%{opacity:1} 50%{opacity:.35} }
+@keyframes arp-fadeUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes arp-blink   { 0%,100%{opacity:1} 50%{opacity:.35} }
+@keyframes arp-spin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes arp-ping    { 75%,100%{transform:scale(2);opacity:0} }
+@keyframes fpulse      { 0%,100%{opacity:1} 50%{opacity:.35} }
+@keyframes bar-grow    { from{transform:scaleY(0);opacity:0} to{transform:scaleY(1);opacity:1} }
+@keyframes marquee     { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes slide-in-up { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes notif-swap  { 0%{opacity:0;transform:translateY(6px)} 10%{opacity:1;transform:translateY(0)} 85%{opacity:1;transform:translateY(0)} 100%{opacity:0;transform:translateY(-6px)} }
+@keyframes float-slow  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes shimmer-bg  { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+@keyframes glow-pulse  { 0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,0)} 50%{box-shadow:0 0 32px 8px rgba(167,139,250,0.18)} }
+@keyframes typing-dot  { 0%,80%,100%{transform:scale(0);opacity:.4} 40%{transform:scale(1);opacity:1} }
 
-.arp-fade-1{opacity:0;animation:arp-fadeUp .6s ease .10s forwards}
-.arp-fade-2{opacity:0;animation:arp-fadeUp .6s ease .22s forwards}
-.arp-fade-3{opacity:0;animation:arp-fadeUp .6s ease .34s forwards}
-.arp-fade-4{opacity:0;animation:arp-fadeUp .6s ease .46s forwards}
-.arp-fade-5{opacity:0;animation:arp-fadeUp .6s ease .58s forwards}
+.arp-fade-1{opacity:0;animation:arp-fadeUp .65s cubic-bezier(0.22,1,0.36,1) .10s forwards}
+.arp-fade-2{opacity:0;animation:arp-fadeUp .65s cubic-bezier(0.22,1,0.36,1) .22s forwards}
+.arp-fade-3{opacity:0;animation:arp-fadeUp .65s cubic-bezier(0.22,1,0.36,1) .34s forwards}
+.arp-fade-4{opacity:0;animation:arp-fadeUp .65s cubic-bezier(0.22,1,0.36,1) .46s forwards}
+.arp-fade-5{opacity:0;animation:arp-fadeUp .65s cubic-bezier(0.22,1,0.36,1) .58s forwards}
+
+/* Dot grid texture utility */
+.dot-grid {
+  background-image: radial-gradient(rgba(167,139,250,0.13) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Line grid texture utility */
+.line-grid {
+  background-image:
+    linear-gradient(rgba(167,139,250,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Live demo responsive */
+@media (max-width: 900px) { .live-demo-grid { grid-template-columns: 1fr !important; } }
+@media (max-width: 640px) { .live-demo-events { display: none !important; } }
+
+/* Marquee responsive */
+@media (max-width: 640px) { .marquee-inner { animation-duration: 16s !important; } }
