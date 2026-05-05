@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, ArrowIcon, gradText } from "../utils/SharedUI";
+import { motion, useInView } from "framer-motion";
+import { fadeUp, STAGGER, VP } from "../utils/motion";
 
 const UseCaseCard = ({ item, index }) => {
   const [hovered, setHovered] = useState(false);
@@ -106,6 +108,8 @@ export default function UseCases() {
   const navigate = useNavigate();
   const { t } = useApp();
   const u = t.useCases;
+  const ref = useRef(null);
+  const inView = useInView(ref, VP);
 
   return (
     <section style={{ background: "var(--bg-primary)", padding: "96px 0 112px" }}>
@@ -116,77 +120,77 @@ export default function UseCases() {
           <SectionSub>{u.subtitle}</SectionSub>
         </div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "20px",
-        }}>
-          {u.items.map((item, i) => (
-            <UseCaseCard key={i} item={item} index={i}/>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div style={{
-          marginTop: "64px",
-          borderRadius: "24px",
-          padding: "44px 52px",
-          background: "linear-gradient(135deg,#1c1917,#262421)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "28px",
-          flexWrap: "wrap",
-          position: "relative",
-          overflow: "hidden",
-        }}>
+        <motion.div ref={ref} variants={STAGGER} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <div style={{
-            position: "absolute", top: "-40px", right: "-40px",
-            width: "240px", height: "240px", borderRadius: "50%",
-            background: "radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 70%)",
-            pointerEvents: "none",
-          }}/>
-          <div style={{ position: "relative" }}>
-            <p style={{
-              fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600,
-              color: "rgba(255,255,255,0.40)", textTransform: "uppercase",
-              letterSpacing: "0.1em", marginBottom: "8px",
-            }}>
-              {u.ctaText}
-            </p>
-            <h3 style={{
-              fontFamily: "'Fraunces',serif", fontWeight: 800,
-              fontSize: "clamp(20px,2.8vw,30px)", color: "#fff",
-              lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0,
-            }}>
-              {u.ctaTitle}{" "}
-              <span style={gradText}>{u.ctaAccent}</span>
-            </h3>
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "20px",
+          }}>
+            {u.items.map((item, i) => (
+              <motion.div key={i} variants={fadeUp}>
+                <UseCaseCard item={item} index={i}/>
+              </motion.div>
+            ))}
           </div>
-          <button
-            onClick={() => navigate("/contact")}
-            style={{
-              fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
-              color: "#fff", background: GRAD, border: "none",
-              padding: "13px 28px", borderRadius: "13px", cursor: "pointer",
-              display: "inline-flex", alignItems: "center", gap: "7px",
-              boxShadow: "0 4px 20px rgba(167,139,250,0.30)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-              position: "relative", whiteSpace: "nowrap",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
-          >
-            {u.ctaBtn}<ArrowIcon white/>
-          </button>
-        </div>
-      </div>
 
-      <style>{`
-        @media(max-width:640px) {
-          .use-cases-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+          {/* Bottom CTA */}
+          <motion.div variants={fadeUp}>
+            <div style={{
+              marginTop: "64px",
+              borderRadius: "24px",
+              padding: "44px 52px",
+              background: "linear-gradient(135deg,#1c1917,#262421)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "28px",
+              flexWrap: "wrap",
+              position: "relative",
+              overflow: "hidden",
+            }}>
+              <div style={{
+                position: "absolute", top: "-40px", right: "-40px",
+                width: "240px", height: "240px", borderRadius: "50%",
+                background: "radial-gradient(circle,rgba(167,139,250,0.10) 0%,transparent 70%)",
+                pointerEvents: "none",
+              }}/>
+              <div style={{ position: "relative" }}>
+                <p style={{
+                  fontFamily: "'DM Sans',sans-serif", fontSize: "12px", fontWeight: 600,
+                  color: "rgba(255,255,255,0.40)", textTransform: "uppercase",
+                  letterSpacing: "0.1em", marginBottom: "8px",
+                }}>
+                  {u.ctaText}
+                </p>
+                <h3 style={{
+                  fontFamily: "'Fraunces',serif", fontWeight: 800,
+                  fontSize: "clamp(20px,2.8vw,30px)", color: "#fff",
+                  lineHeight: 1.15, letterSpacing: "-0.02em", margin: 0,
+                }}>
+                  {u.ctaTitle}{" "}
+                  <span style={gradText}>{u.ctaAccent}</span>
+                </h3>
+              </div>
+              <button
+                onClick={() => navigate("/contact")}
+                style={{
+                  fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
+                  color: "#fff", background: GRAD, border: "none",
+                  padding: "13px 28px", borderRadius: "13px", cursor: "pointer",
+                  display: "inline-flex", alignItems: "center", gap: "7px",
+                  boxShadow: "0 4px 20px rgba(167,139,250,0.30)",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  position: "relative", whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.40)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
+              >
+                {u.ctaBtn}<ArrowIcon white/>
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

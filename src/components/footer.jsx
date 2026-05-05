@@ -15,9 +15,6 @@ export default function Footer() {
     <>
       <style>{`
         .footer-input::placeholder { color: rgba(255,255,255,0.28) !important; }
-        @keyframes fpulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-        @media(max-width:900px){ .footer-grid{grid-template-columns:1fr 1fr!important} .footer-brand{grid-column:1/-1!important} }
-        @media(max-width:480px){ .footer-grid{grid-template-columns:1fr!important} }
       `}</style>
       <footer style={{ background: "linear-gradient(160deg,#1a1917 0%,#0f0e0d 100%)", position: "relative", overflow: "hidden" }}>
         {/* Glows de fondo */}
@@ -62,7 +59,7 @@ export default function Footer() {
                     <path d="M2 17.5 L10 11.5 L22 15.5 L22 22 L2 22 Z" fill="currentColor" />
                   </svg>
                 </div>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 800, fontSize: "22px", color: "#fff", letterSpacing: "-0.04em" }}>
+                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: "22px", color: "#fff", letterSpacing: "-0.04em" }}>
                   AKJ<span style={gradText}>.ai</span>
                 </span>
               </div>

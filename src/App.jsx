@@ -42,6 +42,7 @@ const FloatingCTA = () => {
     <button
       onClick={() => navigate("/contact")}
       title="Book a call"
+      aria-label="Book a call"
       style={{
         position: "fixed", bottom: "28px", right: "28px", zIndex: 999,
         width: "52px", height: "52px", borderRadius: "26px",

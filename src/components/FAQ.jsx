@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/useApp";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, ArrowIcon, gradText } from "../utils/SharedUI";
+import { motion, useInView } from "framer-motion";
+import { fadeUp, STAGGER, VP } from "../utils/motion";
 
 const ChevronDown = ({ open }) => (
   <svg
@@ -88,6 +90,8 @@ export default function FAQ() {
   const { t } = useApp();
   const f = t.faq;
   const [openIdx, setOpenIdx] = useState(null);
+  const ref = useRef(null);
+  const inView = useInView(ref, VP);
 
   const toggle = (i) => setOpenIdx(openIdx === i ? null : i);
 
@@ -100,56 +104,61 @@ export default function FAQ() {
           <SectionSub>{f.subtitle}</SectionSub>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {f.items.map((item, i) => (
-            <FAQItem
-              key={i}
-              item={item}
-              index={i}
-              isOpen={openIdx === i}
-              onToggle={() => toggle(i)}
-            />
-          ))}
-        </div>
+        <motion.div ref={ref} variants={STAGGER} initial="hidden" animate={inView ? "visible" : "hidden"}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {f.items.map((item, i) => (
+              <motion.div key={i} variants={fadeUp}>
+                <FAQItem
+                  item={item}
+                  index={i}
+                  isOpen={openIdx === i}
+                  onToggle={() => toggle(i)}
+                />
+              </motion.div>
+            ))}
+          </div>
 
-        {/* CTA at the bottom */}
-        <div style={{
-          marginTop: "52px",
-          textAlign: "center",
-          padding: "36px 40px",
-          borderRadius: "20px",
-          background: "var(--bg-card)",
-          border: "1px solid var(--border)",
-          boxShadow: "var(--shadow-sm)",
-        }}>
-          <p style={{
-            fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "22px",
-            color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: "10px",
-          }}>
-            {f.ctaTitle}
-          </p>
-          <p style={{
-            fontFamily: "'DM Sans',sans-serif", fontSize: "15px",
-            color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "24px",
-          }}>
-            {f.ctaDesc}
-          </p>
-          <button
-            onClick={() => navigate("/contact")}
-            style={{
-              fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
-              color: "#fff", background: GRAD, border: "none",
-              padding: "12px 28px", borderRadius: "12px", cursor: "pointer",
-              display: "inline-flex", alignItems: "center", gap: "7px",
-              boxShadow: "0 4px 20px rgba(167,139,250,0.28)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.38)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.28)"; }}
-          >
-            {f.ctaBtn} <ArrowIcon white/>
-          </button>
-        </div>
+          {/* CTA at the bottom */}
+          <motion.div variants={fadeUp}>
+            <div style={{
+              marginTop: "52px",
+              textAlign: "center",
+              padding: "36px 40px",
+              borderRadius: "20px",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border)",
+              boxShadow: "var(--shadow-sm)",
+            }}>
+              <p style={{
+                fontFamily: "'Fraunces',serif", fontWeight: 800, fontSize: "22px",
+                color: "var(--text-primary)", letterSpacing: "-0.02em", marginBottom: "10px",
+              }}>
+                {f.ctaTitle}
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans',sans-serif", fontSize: "15px",
+                color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "24px",
+              }}>
+                {f.ctaDesc}
+              </p>
+              <button
+                onClick={() => navigate("/contact")}
+                style={{
+                  fontFamily: "'DM Sans',sans-serif", fontWeight: 600, fontSize: "14px",
+                  color: "#fff", background: GRAD, border: "none",
+                  padding: "12px 28px", borderRadius: "12px", cursor: "pointer",
+                  display: "inline-flex", alignItems: "center", gap: "7px",
+                  boxShadow: "0 4px 20px rgba(167,139,250,0.28)",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.38)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.28)"; }}
+              >
+                {f.ctaBtn} <ArrowIcon white/>
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -38,6 +38,7 @@ const ThemeToggle = () => {
   const { theme, toggleTheme } = useApp();
   return (
     <motion.button onClick={toggleTheme} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.93 }}
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       style={{ width: "34px", height: "34px", borderRadius: "9px", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-tertiary)", border: "1px solid var(--border)", color: "var(--text-secondary)", cursor: "pointer", transition: "color 0.2s, border-color 0.2s", flexShrink: 0 }}
       onMouseEnter={(e) => { e.currentTarget.style.color = GREEN; e.currentTarget.style.borderColor = "rgba(167,139,250,0.4)"; }}
       onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; e.currentTarget.style.borderColor = "var(--border)"; }}
@@ -223,22 +224,9 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        @keyframes arp-blink  { 0%,100%{opacity:1} 50%{opacity:.35} }
-        @keyframes arp-spin   { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-        @keyframes arp-fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes arp-ping   { 75%,100%{transform:scale(2);opacity:0} }
-        @keyframes fpulse     { 0%,100%{opacity:1} 50%{opacity:.4} }
-        .arp-fade-1{opacity:0;animation:arp-fadeUp .6s ease .1s forwards}
-        .arp-fade-2{opacity:0;animation:arp-fadeUp .6s ease .22s forwards}
-        .arp-fade-3{opacity:0;animation:arp-fadeUp .6s ease .34s forwards}
-        .arp-fade-4{opacity:0;animation:arp-fadeUp .6s ease .46s forwards}
-        .arp-fade-5{opacity:0;animation:arp-fadeUp .6s ease .58s forwards}
         .arp-desk{display:flex!important}
         .arp-mob{display:none!important}
         @media(max-width:900px){.arp-desk{display:none!important}.arp-mob{display:flex!important}}
-        *, *::before, *::after{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth}
-        body{background:var(--bg-secondary);-webkit-font-smoothing:antialiased}
       `}</style>
 
       <motion.header

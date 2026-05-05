@@ -3,9 +3,9 @@ import { useApp } from "../context/useApp";
 import { GREEN, GREEN_DARK, GRAD, card, SectionBadge, SectionTitle, SectionSub, CheckIcon, ArrowIcon, gradText } from "../utils/SharedUI";
 
 const FOUNDERS = [
-  { name: "Justin Kuijper",    initials: "JK", email: "justin@akj.ai",    linkedin: "#" },
-  { name: "Alexander Janssen", initials: "AJ", email: "alexander@akj.ai", linkedin: "#" },
-  { name: "Adrian Alvarez",    initials: "AA", email: "adrian@akj.ai",    linkedin: "#" },
+  { name: "Adrián Álvarez Sande", initials: "AÁ", email: "adrian@akj.ai",    linkedin: "#" },
+  { name: "Justin Kuijper",       initials: "JK", email: "justin@akj.ai",    linkedin: "#" },
+  { name: "Alexander",            initials: "AK", email: "alexander@akj.ai", linkedin: "#" },
 ];
 
 const EMAILJS_SERVICE_ID  = "service_7qaapmd";

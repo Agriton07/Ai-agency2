@@ -401,6 +401,7 @@ function ChatBubble({ msg, visible }) {
 
 function LiveDemoSection() {
   const { t } = useApp();
+  const ld = t.home.liveDemo;
   const navigate = useNavigate();
   const { ref, inView } = useReveal();
   const [step, setStep] = useState(-1);
@@ -458,7 +459,7 @@ function LiveDemoSection() {
               padding: "5px 14px", borderRadius: "99px",
             }}>
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: GREEN, animation: "arp-blink 2s ease infinite" }}/>
-              Watch it work
+              {ld.badge}
             </span>
           </div>
           <h2 style={{
@@ -467,15 +468,15 @@ function LiveDemoSection() {
             letterSpacing: "-0.025em", color: "var(--text-primary)",
             marginBottom: "16px",
           }}>
-            Your AI responds while{" "}
-            <span style={gradText}>you sleep.</span>
+            {ld.title}{" "}
+            <span style={gradText}>{ld.titleAccent}</span>
           </h2>
           <p style={{
             fontFamily: "'DM Sans',sans-serif", fontSize: "17px",
             color: "var(--text-secondary)", lineHeight: 1.65,
             maxWidth: "520px", margin: "0 auto",
           }}>
-            A customer messages at 11pm. Your AI qualifies, responds, and books — in seconds. No human needed.
+            {ld.subtitle}
           </p>
         </div>
 
@@ -564,7 +565,7 @@ function LiveDemoSection() {
               color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em",
               marginBottom: "4px",
             }}>
-              Automated actions
+              {ld.eventLabel}
             </p>
             {DEMO_EVENTS.map((ev, i) => {
               const active = activeEvents.includes(ev.label);
@@ -617,7 +618,7 @@ function LiveDemoSection() {
             }}>
               <span style={{ fontSize: "22px" }}>⚡</span>
               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "13px", color: "var(--text-secondary)", lineHeight: 1.5, margin: 0 }}>
-                <strong style={{ color: "var(--text-primary)" }}>All of this happened in under 8 seconds</strong> — automatically, while you were unavailable.
+                {ld.statText}
               </p>
             </div>
 
@@ -635,7 +636,7 @@ function LiveDemoSection() {
               onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.04)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(167,139,250,0.45)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(167,139,250,0.30)"; }}
             >
-              Build this for my business <ArrowIcon white />
+              {ld.cta} <ArrowIcon white />
             </button>
           </div>
         </motion.div>
@@ -1064,9 +1065,10 @@ function UseCasesTeaser() {
 function ResultsCounter({ val }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const num = parseInt(val.replace(/\D/g, ""), 10);
-  const suffix = val.replace(/[\d]/g, "").replace("&lt;", "").trim();
-  const prefix = val.includes("<") || val.includes("wk") || val.includes("sem") ? "<" : "";
+  const prefix = val.startsWith("<") ? "<" : val.startsWith(">") ? ">" : "";
+  const stripped = prefix ? val.slice(1) : val;
+  const num = parseInt(stripped.replace(/\D/g, ""), 10);
+  const suffix = stripped.replace(/[\d]/g, "").trim();
   const count = useCountUp(num || 0, 1600, inView);
   return (
     <span ref={ref}>
